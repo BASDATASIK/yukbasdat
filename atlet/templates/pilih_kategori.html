@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block meta %}
+<title>Daftar Event</title>
+<link rel="stylesheet" href="{% static 'atlet/css/atlet.css' %}">
+{% endblock meta %}
+
+{% block content %}
+<div class="content-container d-flex align-items-center justify-content-center mx-auto">
+	<div class="container">
+		<h3 class="text-center"><strong>Pilih Kategori</strong></h3>
+		<p><strong>Event:</strong> EventA</p>
+		<p><strong>Hadiah:</strong> Rp 5.000.000</p>
+		<p><strong>Tanggal Mulai:</strong> 12-04-2023</p>
+		<p><strong>Tanggal Selesai:</strong> 15-04-2023</p>
+		<p><strong>Kategori:</strong> S200</p>
+		<p><strong>Kapasitas:</strong> 50/64</p>
+		<p><strong>Stadium:</strong> GBK</p>
+		<p><strong>Negara:</strong> Indonesia</p>
+		<table class="table table-bordered table-striped table-hover">
+			<thead class="text-center">
+			<tr>
+				<th>Kategori</th>
+				<th>Partner</th>
+				<th></th>
+			</tr>
+			</thead>
+			<tbody class="text-center">
+			<tr>
+				<td>Tunggal Putra</td>
+				<td>-</td>
+				<td><button class="btn btn-custom btn-primary">Join</button></td>
+			</tr>
+			<tr>
+				<td>Ganda Putra</td>
+				<td>
+					<select class="custom-select">
+						<option selected>Atlet 1</option>
+						<option value="1">Atlet 2</option>
+						<option value="2">Atlet 3</option>
+						<option value="3">Atlet 4</option>
+					</select>
+				</td>
+				<td><button class="btn btn-custom btn-primary">Join</button></td>
+			</tr>
+			<tr>
+				<td>Ganda Campuran</td>
+				<td>
+					<select class="custom-select">
+						<option selected>Atlet 1</option>
+						<option value="1">Atlet 2</option>
+						<option value="2">Atlet 3</option>
+						<option value="3">Atlet 4</option>
+					</select>
+				</td>
+				<td><button class="btn btn-custom btn-primary">Join</button></td>
+			</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+
+{% endblock content %}
