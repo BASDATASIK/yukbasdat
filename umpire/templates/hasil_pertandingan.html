@@ -1,14 +1,32 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<center>
-  <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
-    <a href="">
-      <div class="card text-center" style="width: 200px; height: 200px; padding-bottom: 40px;">
-          <div class="card-body"> 
-            <h1 class="card-title">NAMA EVENT</h1>
-        </div>
-    </a>
-  </div>
+<div class="content-container d-flex align-items-center justify-content-center mx-auto">
+	<div class="container">
+		<h2>RIWAYAT HASIL PERTANDINGAN</h2>
+		<table class="table table-bordered table-striped table-hover">
+			<thead class="text-center">
+			<tr>
+        <th>Event</th>
+        <th></th>
+			</tr>
+			</thead>
+			<tbody class="text-center">
+			<tr>
+        <th>Uber Cup</th> 
+        <td><button class="btn btn-custom btn-primary">Pilih</button></td>
+			</tr>
+			<tr>
+        <th>Grab Cup</th>
+        <td><button class="btn btn-custom btn-primary">Pilih</button></td>
+			</tr>
+			<tr>
+        <th>Gojek Cup</th>
+        <td><button class="btn btn-custom btn-primary">Pilih</button></td>
+			</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
 </center>
 {% endblock content %}
