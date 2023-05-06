@@ -6,3 +6,6 @@ def daftar_atlet(request):
 
 def list_atlet(request):
     return render(request, 'list_atlet.html')
+
+def list_atlet(request):
+    return render(request, 'list_atlet.html')

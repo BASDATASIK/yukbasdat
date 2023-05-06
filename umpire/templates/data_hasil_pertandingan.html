@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="content-container d-flex align-items-center justify-content-center mx-auto" style="width: 500px;">
+  <div class="container">
+    <h3 class="text-center"><strong>Nama Event</strong></h3>
+    <p><strong>Nama Event:</strong> EventA</p>
+    <p><strong>Stadium:</strong> GBK</p>
+    <p><strong>Hadiah:</strong> Rp 5.000.000</p>
+    <p><strong>Kategori Superseries:</strong>XXXX</p>
+    <p><strong>Tanggal Mulai:</strong> 15-04-2023</p>
+    <p><strong>Tanggal selesai:</strong> 15-04-2023</p>
+    <p><strong>Kapasitas:</strong> 50/64</p>
+
+    <table class="table table-bordered table-striped table-hover">
+      <thead class="text-center">
+        <tr>
+          <th>Tahap</th>
+          <th>Nama Tim</th>
+        </tr>
+      </thead>
+      <tbody class="center" style="text-align: center; vertical-align: middle;">
+        <tr>
+          <td>Juara 1</td>
+          <td>Tim 1</td>
+        </tr>
+        <tr>
+          <td>Juara 2</td>
+          <td> Tim 2</td> 
+        </tr>
+        <tr>
+          <td>Juara 3</td>
+          <td> Tim 3</td>
+        </tr>
+        <tr>
+          <td>Semifinal</td>
+          <td> Tim 4</td>
+        </tr>
+        <tr>
+          <td>Perempat Final</td>
+          <td>Tim 1<br>Tim 2<br>Tim 3<br>Tim 4</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+{% endblock content %}

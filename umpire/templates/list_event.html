@@ -1,38 +1,55 @@
 {% extends 'base.html' %}
 
 {% block content %}
+
 <body>
-  <h1 class="text-center">List Event</h1>
-  <div class="container d-flex align-items-center" style="height: 100vh;">
-    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
-      <div class="card text-center" style="width: 18rem;">
-        <div class="card-body">
-          <h4><b>[Nama Event]</b></h4>
-          <p><b>Stadium:</b> [XXXX]</p>
-          <p><b>Hadiah:</b> [1234567]</p>
-          <p><b>Kategori Superseries:</b> [XXXX]</p>
-          <p><b>Tanggal Mulai:</b> [DD/MM/YYYY]</p>  
-          <p><b>Tanggal Selesai:</b> [DD/MM/YYYY]</p>
-          <p><b>Kapasitas:</b> [1234456]</p>
-          <input type="checkbox" id="agree" onchange="toggleButton()">
-          <button type="submit" id="submit" disabled class="btn btn-primary">Mulai</button>
-          <script>
-            function toggleButton() {
-              var checkbox = document.getElementById("agree");
-              var button = document.getElementById("submit");
-              
-              if (checkbox.checked == true) {
-                button.disabled = false;
-              } else {
-                button.disabled = true;
-                alert("Kapasitas harus genap.");
-              }
-            }
-            </script>
+  <h1 class="text-center"><strong>List Event</strong> </h1>
+  <div class="content-container d-flex align-items-center justify-content-center mx-auto">
+    <div class="row">
+      <div class="col-md-4 mb-3">
+        <div class="card" style="width: 18rem;">
+          <div class="card-body">
+            <h4 class="text-center"><b>[Nama Event]</b></h4>
+            <p><b>Stadium:</b> [XXXX]</p>
+            <p><b>Hadiah:</b> [1234567]</p>
+            <p><b>Kategori Superseries:</b> [XXXX]</p>
+            <p><b>Tanggal Mulai:</b> [DD/MM/YYYY]</p>
+            <p><b>Tanggal Selesai:</b> [DD/MM/YYYY]</p>
+            <p><b>Kapasitas:</b> [1234456]</p>
+            <button type="submit" id="submit" class="btn btn-primary ">Mulai</button>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-3">
+        <div class="card" style="width: 18rem;">
+          <div class="card-body">
+            <h4 class="text-center"><b>[Nama Event]</b></h4>
+            <p><b>Stadium:</b> [XXXX]</p>
+            <p><b>Hadiah:</b> [1234567]</p>
+            <p><b>Kategori Superseries:</b> [XXXX]</p>
+            <p><b>Tanggal Mulai:</b> [DD/MM/YYYY]</p>
+            <p><b>Tanggal Selesai:</b> [DD/MM/YYYY]</p>
+            <p><b>Kapasitas:</b> [1234456]</p>
+            <button type="submit" id="submit" class="btn btn-primary ">Mulai</button>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-3">
+        <div class="card" style="width: 18rem;">
+          <div class="card-body">
+            <h4 class="text-center"><b>[Nama Event]</b></h4>
+            <p><b>Stadium:</b> [XXXX]</p>
+            <p><b>Hadiah:</b> [1234567]</p>
+            <p><b>Kategori Superseries:</b> [XXXX]</p>
+            <p><b>Tanggal Mulai:</b> [DD/MM/YYYY]</p>
+            <p><b>Tanggal Selesai:</b> [DD/MM/YYYY]</p>
+            <p><b>Kapasitas:</b> [1234456]</p>
+            <button type="submit" id="submit" class="btn btn-primary ">Mulai</button>
+          </div>
         </div>
       </div>
     </div>
   </div>
+  </div>
 </body>
 {% endblock content %}
-
