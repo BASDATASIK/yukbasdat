@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block meta %}
+<title>Daftar Atlet</title>
+<link rel="stylesheet" href="{% static 'pelatih/css/pelatih.css' %}">
+{% endblock meta %}
+
+{% block content %}
+<div class="content-container d-flex align-items-center justify-content-center mx-auto">
+	<div class="container">
+		<h2>DAFTAR ATLET</h2>
+		<form>
+			<div class="form-group">
+				<label for="atlet">Atlet yang mau didaftarkan:</label>
+				<select class="form-control" id="atlet">
+					<option>Atlet Dummy 1</option>
+					<option>Atlet Dummy 2</option>
+					<option>Atlet Dummy 3</option>
+					<option>Atlet Dummy 4</option>
+					<option>Atlet Dummy 5</option>
+				</select>
+			</div>
+			<button type="submit" class="btn btn-primary btn-custom btn-block">SUBMIT</button>
+		</form>
+	</div>
+</div>
+{% endblock content %}

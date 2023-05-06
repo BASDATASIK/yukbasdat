@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block meta %}
+<title>BABADU</title>
+<link rel="stylesheet" href="{% static 'auth/css/auth.css' %}">
+{% endblock meta %}
+
+{% block content %}
+<div class="content-container d-flex align-items-center justify-content-center mx-auto">
+	<div class="container">
+		<h2><strong>BABADU - 5</strong></h2>
+		<div class="row">
+			<div class="col">
+				<button type="submit" class="btn btn-primary btn-custom btn-block">Login</button>
+			</div>
+			<div class="col">
+				<button type="submit" class="btn btn-primary btn-custom btn-block">Register</button>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock content %}

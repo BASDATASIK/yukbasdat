@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block meta %}
+<title>Daftar Event</title>
+<link rel="stylesheet" href="{% static 'atlet/css/atlet.css' %}">
+{% endblock meta %}
+
+{% block content %}
+<div class="content-container d-flex align-items-center justify-content-center mx-auto">
+	<div class="container">
+		<h2>Daftar Event</h2>
+		<table class="table table-bordered table-striped table-hover">
+			<thead class="text-center">
+			<tr>
+				<th>Nama</th>
+				<th>Stadium Negara</th>
+				<th>Kapasitas</th>
+				<th></th>
+			</tr>
+			</thead>
+			<tbody class="text-center">
+			<tr>
+				<td>GBK</td>
+				<td>Indonesia</td>
+				<td>8</td>
+				<td><button class="btn btn-custom btn-primary">Pilih</button></td>
+			</tr>
+			<tr>
+				<td>Senayan</td>
+				<td>Indonesia</td>
+				<td>16</td>
+				<td><button class="btn btn-custom btn-primary">Pilih</button></td>
+			</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+{% endblock content %}

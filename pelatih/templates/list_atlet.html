@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block meta %}
+<title>Daftar Atlet</title>
+<link rel="stylesheet" href="{% static 'pelatih/css/pelatih.css' %}">
+{% endblock meta %}
+
+{% block content %}
+<div class="content-container d-flex align-items-center justify-content-center mx-auto">
+	<div class="container">
+		<h2>List Atlet</h2>
+		<table class="table table-bordered table-striped table-hover">
+			<thead class="text-center">
+			<tr>
+				<th>Nama Atlet</th>
+				<th>Email</th>
+				<th>World rank</th>
+			</tr>
+			</thead>
+			<tbody class="text-center">
+			<tr>
+				<td>Sukiman1</td>
+				<td>Sukiman1@gmail.com</td>
+				<td>1</td>
+			</tr>
+			<tr>
+				<td>Sukiman2</td>
+				<td>Sukiman2@gmail.com</td>
+				<td>2</td>
+			</tr>
+			<tr>
+				<td>Sukiman3</td>
+				<td>Sukiman3@gmail.com</td>
+				<td>3</td>
+			</tr>
+			<tr>
+				<td>Sukiman4</td>
+				<td>Sukiman4@gmail.com</td>
+				<td>4</td>
+			</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+{% endblock content %}

@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block meta %}
+<title>Pertanyaan Kualifikasi</title>
+<link rel="stylesheet" href="{% static 'atlet/css/atlet.css' %}">
+{% endblock meta %}
+
+{% block content %}
+<div class="content-container d-flex align-items-center justify-content-center mx-auto">
+	<div class="container">
+		<h2>PERTANYAAN KUALIFIKASI</h2>
+		<form>
+			<div class="form-group question">
+				<p><strong>Question 1:</strong> Apa nama teknik dasar pukulan dalam badminton yang digunakan untuk mengembalikan bola dengan cepat dan tajam?</p>
+				<div class="row">
+					<div class="col-sm-4">
+						<input type="radio" id="q1c1" name="question1">
+						<label for="q1c1">Drive</label>
+					</div>
+					<div class="col-sm-4">
+						<input type="radio" id="q1c2" name="question1">
+						<label for="q1c2">Smash</label>
+					</div>
+					<div class="col-sm-4">
+						<input type="radio" id="q1c3" name="question1">
+						<label for="q1c3">Drop shot</label>
+					</div>
+				</div>
+			</div>
+			<div class="form-group question">
+				<p><strong>Question 2:</strong> Berapakah jumlah pemain maksimum dalam satu tim ganda campuran dalam badminton?</p>
+				<div class="row">
+					<div class="col-sm-4">
+						<input type="radio" id="q2c1" name="question1">
+						<label for="q2c1">2</label>
+					</div>
+					<div class="col-sm-4">
+						<input type="radio" id="q2c2" name="question1">
+						<label for="q2c2">4</label>
+					</div>
+					<div class="col-sm-4">
+						<input type="radio" id="q2c3" name="question1">
+						<label for="q2c3">6</label>
+					</div>
+				</div>
+			</div>
+			<div class="form-group question">
+				<p><strong>Question 3:</strong> Lorem ipsum?</p>
+				<div class="row">
+					<div class="col-sm-4">
+						<input type="radio" id="q3c1" name="question1">
+						<label for="q3c1">2</label>
+					</div>
+					<div class="col-sm-4">
+						<input type="radio" id="q3c2" name="question1">
+						<label for="q3c2">4</label>
+					</div>
+					<div class="col-sm-4">
+						<input type="radio" id="q3c3" name="question1">
+						<label for="q3c3">6</label>
+					</div>
+				</div>
+			</div>
+			<div class="form-group question">
+				<p><strong>Question 4:</strong> Lorem ipsum dolor sit amet, consectetur ?</p>
+				<div class="row">
+					<div class="col-sm-4">
+						<input type="radio" id="q4c1" name="question1">
+						<label for="q4c1">2</label>
+					</div>
+					<div class="col-sm-4">
+						<input type="radio" id="q4c2" name="question1">
+						<label for="q4c2">4</label>
+					</div>
+					<div class="col-sm-4">
+						<input type="radio" id="q4c3" name="question1">
+						<label for="q4c3">6</label>
+					</div>
+				</div>
+			</div>
+			<div class="form-group question">
+				<p><strong>Question 5:</strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci aperiam consequuntur deleniti, distinctio, dolorum enim eos exercitationem hic labore molestiae Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid aperiam at cumque illum ipsum libero magni, minima mollitia non officiis omnis porro quia quibusdam quidem recusandae, sit tempore vitae voluptatibus.?</p>
+				<div class="row">
+					<div class="col-sm-4">
+						<input type="radio" id="q5c1" name="question1">
+						<label for="q5c1">2</label>
+					</div>
+					<div class="col-sm-4">
+						<input type="radio" id="q5c2" name="question1">
+						<label for="q5c2">4</label>
+					</div>
+					<div class="col-sm-4">
+						<input type="radio" id="q5c3" name="question1">
+						<label for="q5c3">6</label>
+					</div>
+					<div class="col-sm-4">
+						<input type="radio" id="q5c4" name="question1">
+						<label for="q5c4">6</label>
+					</div>
+				</div>
+			</div>
+			<button type="submit" class="btn btn-primary btn-custom btn-block">SUBMIT</button>
+		</form>
+	</div>
+</div>
+{% endblock content %}
