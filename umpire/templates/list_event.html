@@ -2,54 +2,55 @@
 
 {% block content %}
 
-<body>
-  <h1 class="text-center"><strong>List Event</strong> </h1>
-  <div class="content-container d-flex align-items-center justify-content-center mx-auto">
-    <div class="row">
-      <div class="col-md-4 mb-3">
-        <div class="card" style="width: 18rem;">
-          <div class="card-body">
-            <h4 class="text-center"><b>[Nama Event]</b></h4>
-            <p><b>Stadium:</b> [XXXX]</p>
-            <p><b>Hadiah:</b> [1234567]</p>
-            <p><b>Kategori Superseries:</b> [XXXX]</p>
-            <p><b>Tanggal Mulai:</b> [DD/MM/YYYY]</p>
-            <p><b>Tanggal Selesai:</b> [DD/MM/YYYY]</p>
-            <p><b>Kapasitas:</b> [1234456]</p>
-            <button type="submit" id="submit" class="btn btn-primary ">Mulai</button>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4 mb-3">
-        <div class="card" style="width: 18rem;">
-          <div class="card-body">
-            <h4 class="text-center"><b>[Nama Event]</b></h4>
-            <p><b>Stadium:</b> [XXXX]</p>
-            <p><b>Hadiah:</b> [1234567]</p>
-            <p><b>Kategori Superseries:</b> [XXXX]</p>
-            <p><b>Tanggal Mulai:</b> [DD/MM/YYYY]</p>
-            <p><b>Tanggal Selesai:</b> [DD/MM/YYYY]</p>
-            <p><b>Kapasitas:</b> [1234456]</p>
-            <button type="submit" id="submit" class="btn btn-primary ">Mulai</button>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4 mb-3">
-        <div class="card" style="width: 18rem;">
-          <div class="card-body">
-            <h4 class="text-center"><b>[Nama Event]</b></h4>
-            <p><b>Stadium:</b> [XXXX]</p>
-            <p><b>Hadiah:</b> [1234567]</p>
-            <p><b>Kategori Superseries:</b> [XXXX]</p>
-            <p><b>Tanggal Mulai:</b> [DD/MM/YYYY]</p>
-            <p><b>Tanggal Selesai:</b> [DD/MM/YYYY]</p>
-            <p><b>Kapasitas:</b> [1234456]</p>
-            <button type="submit" id="submit" class="btn btn-primary ">Mulai</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  </div>
-</body>
+<div class="content-container d-flex align-items-center justify-content-center mx-auto">
+	<div class="container">
+		<h2>LIST EVENT</h2>
+		<table class="table table-bordered table-striped table-hover">
+			<thead class="text-center">
+			<tr>
+        <th>Nama Event</th>
+				<th>Stadium</th>
+				<th>Hadiah</th>
+				<th>Kategori Superseries</th>
+        <th>Tanggal Mulai</th>
+        <th>Tanggal Selesai</th>
+        <th>Kapasitas</th>
+        <th></th>
+			</tr>
+			</thead>
+			<tbody class="text-center">
+			<tr>
+        <th>Uber Cup</th>
+				<td>Gelora Bung Karno</td>
+				<td>1000000</td>
+				<td>XXXX</td>
+        <td>[DD/MM/YYYY]</td>
+        <td>[DD/MM/YYYY]</td>
+        <td>20000</td>
+        <td><button class="btn btn-custom btn-primary">Main</button></td>
+			</tr>
+			<tr>
+        <th>Grab Cup</th>
+				<td>Gelora Bung Haypo</td>
+				<td>1000000000</td>
+				<td>XXXX</td>
+        <td>[DD/MM/YYYY]</td>
+        <td>[DD/MM/YYYY]</td>
+        <td>30000</td>
+        <td><button class="btn btn-custom btn-primary">Main</button></td>
+			</tr>
+			<tr>
+        <th>Gojek Cup</th>
+				<td>Gelora Gelori</td>
+				<td>10000000000</td>
+				<td>XXXX</td>
+        <td>[DD/MM/YYYY]</td>
+        <td>[DD/MM/YYYY]</td>
+        <td>40000</td>
+        <td><button class="btn btn-custom btn-primary">Main</button></td>
+			</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
 {% endblock content %}
