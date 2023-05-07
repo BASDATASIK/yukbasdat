@@ -18,3 +18,9 @@ def pertandingan_final(request):
 
 def data_perolehan_poin(request):
     return render(request, 'data_perolehan_poin.html')
+
+def pertandingan_perempatfinal(request):
+    return render(request, 'pertandingan_perempatfinal.html')
+
+def pertandingan_perebutan_juara_3(request):
+    return render(request, 'pertandingan_perebutan_juara_3.html')
