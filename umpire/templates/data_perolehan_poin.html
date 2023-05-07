@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    #inside {
+        text-align: center !important;
+        margin: auto !important;
+    }
+</style>
+
+<div class="content-container d-flex align-items-center justify-content-center mx-auto">
+	<div class="container" id="inside">
+        <h4>Data Perolehan Poin</h4>
+        <table class="table table-bordered table-striped table-hover">
+            <tr>
+                <th rowspan="2" style="vertical-align: middle;">Kategori Super Series</th>
+                <th colspan="6">Jenis Babak</th>
+            </tr>
+            <tr>
+              <th>Juara 1</th>
+              <th>Juara 2</th>
+              <th>Semifinal</th>
+              <th>Perempat final</th>
+              <th>R16</th>
+              <th>R32</th>
+            </tr>
+            <tr>
+              <td>S1000</td>
+              <td>1000</td>
+              <td>800</td>
+              <td>600</td>
+              <td>400</td>
+              <td>200</td>
+              <td>100</td>
+            </tr>
+            <tr>
+              <td>S750</td>
+              <td>750</td>
+              <td>600</td>
+              <td>450</td>
+              <td>300</td>
+              <td>150</td>
+              <td>75</td>
+            </tr>
+            <tr>
+              <td>S500</td>
+              <td>500</td>
+              <td>400</td>
+              <td>300</td>
+              <td>200</td>
+              <td>100</td>
+              <td>50</td>
+            </tr>
+            <tr>
+              <td>S300</td>
+              <td>300</td>
+              <td>240</td>
+              <td>180</td>
+              <td>120</td>
+              <td>60</td>
+              <td>30</td>
+            </tr>
+            <tr>
+              <td>S100</td>
+              <td>100</td>
+              <td>80</td>
+              <td>60</td>
+              <td>40</td>
+              <td>20</td>
+              <td>10</td>
+            </tr>
+          </table>          
+	</div>
+</div>
+{% endblock content %}

@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block meta %}
+<title>Unenrolled Event</title>
+<link rel="stylesheet" href="{% static 'atlet/css/atlet.css' %}">
+{% endblock meta %}
+
+{% block content %}
+<style>
+    .card {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        max-width: 300px;
+        margin: 20px;
+        text-align: left;
+        background-color: #f2f2f2;
+        border-radius: 10px;
+    }
+
+    h1{
+        text-align: center;
+    }
+</style>
+
+<div class="content-container d-flex align-items-center justify-content-center mx-auto">
+	<div class="container">
+        <h1>ENROLLED EVENT</h1>
+        <div class="row">
+            <div class="card">
+                <div class="card-header">
+                    <b>Piala Raja Thailand Terbuka</b>
+                </div>
+                <div class="card-body">
+                    <ul>
+                        <li>Stadium : Impact Arena</li>
+                        <li>Hadiah : 100000000</li>
+                        <li>Kategori Superseries : S1000</li>
+                        <li>Kategori Spesialisasi : Tunggal Putra</li>
+                        <li>Tanggal Mulai : 11/01/2021</li>
+                        <li>Tanggal Selesai : 16/01/2021</li>
+                        <li>Kapasitas : 100</li>
+                    </ul>
+                    <button class="btn btn-custom btn-primary">Unenrolled</button>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <b>Singapore Open</b>
+                </div>
+                <div class="card-body">
+                    <ul>
+                        <li>Stadium : Singapore Indoor Stadium</li>
+                        <li>Hadiah : 150000000</li>
+                        <li>Kategori Superseries : S500</li>
+                        <li>Kategori Spesialisasi : Tunggal Putra</li>
+                        <li>Tanggal Mulai : 12/04/2019</li>
+                        <li>Tanggal Selesai : 17/04/2019</li>
+                        <li>Kapasitas : 100</li>
+                    </ul>
+                    <button class="btn btn-custom btn-primary">Unenrolled</button>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <b>Indonesia Open</b>
+                </div>
+                <div class="card-body">
+                    <ul>
+                        <li>Stadium : Istora Senayan</li>
+                        <li>Hadiah : 70000000</li>
+                        <li>Kategori Superseries : S750</li>
+                        <li>Kategori Spesialisasi : Tunggal Putra</li>
+                        <li>Tanggal Mulai : 11/07/2020</li>
+                        <li>Tanggal Selesai : 17/07/2020</li>
+                        <li>Kapasitas : 100</li>
+                    </ul>
+                    <button class="btn btn-custom btn-primary">Unenrolled</button>
+                </div>
+            </div>
+        </div>
+	</div>
+</div>
+{% endblock content %}

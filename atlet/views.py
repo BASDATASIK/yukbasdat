@@ -15,3 +15,9 @@ def daftar_event2(request):
 
 def pilih_kategori(request):
     return render(request, 'pilih_kategori.html')
+
+def unenrolled_event(request):
+    return render(request, 'unenrolled_event.html')
+
+def daftar_sponsor(request):
+    return render(request, 'daftar_sponsor.html')

@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    #inside {
+        text-align: center !important;
+        margin: auto !important;
+    }
+
+    .btn-minus {
+        color: red;
+        border: none;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        border-radius: 8px;
+    }
+
+    .btn-plus {
+        color: green;
+        border: none;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        border-radius: 8px;
+    }
+</style>
+
+<div class="content-container d-flex align-items-center justify-content-center mx-auto">
+	<div class="container" id="inside">
+        <h4>Pertandingan Final</h4>
+        <table class="table table-bordered table-striped table-hover">
+			<thead>
+				<tr>
+					<th colspan="4">[00:00]</th>
+				</tr>
+				<tr>
+					<th>Tim 1</th>
+					<th>Tim 2</th>
+					<th>Skor Tim 1</th>
+					<th>Skor Tim 2</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>A</td>
+					<td>D</td>
+					<td><button class="btn-minus">&#x2013;</button> 1 <button class="btn-plus">+</button></td>
+					<td><button class="btn-minus">&#x2013;</button> 0 <button class="btn-plus">+</button></td>
+				</tr>
+			</tbody>
+		</table>
+		<br>
+		<button class="btn btn-custom btn-primary">NEXT</button>
+	</div>
+</div>
+{% endblock content %}
