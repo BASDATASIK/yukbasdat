@@ -35,6 +35,7 @@ except (Exception, Error) as error:
     print("Error while connecting to PostgreSQL", error)
 
 def execute_query(query:str) -> list:
+    query = query.strip()
     if not (query.endswith(";")):
         query += ";"
     cursor.execute(query)
