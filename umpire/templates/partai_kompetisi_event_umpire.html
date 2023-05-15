@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<style>
+    #inside {
+        text-align: center !important;
+        margin: auto !important;
+    }
+    #red-size {
+        color:red;
+        font-size:12px
+    }
+</style>
+<div class="content-container d-flex align-items-center justify-content-center mx-auto">
+    <div class="container" id="inside">
+        <h2>LIST PARTAI KOMPETISI</h2>
+        <table class="table table-bordered table-striped table-hover">
+            <tr>
+              <th>Nama Event</th>
+              <th>Tahun</th>
+              <th>Stadium</th>
+              <th>Jenis Partai</th>
+              <th>Kategori Superseries</th>
+              <th>Tanggal Mulai</th>
+              <th>Tanggal Selesai</th>
+              <th>Kapasitas</th>
+              <th>Action</th>
+            </tr>
+            {% for row in list_partai_kompetisi_event %}
+                <tr>
+                    <td>{{ row.0 }}</td>
+                    <td>{{ row.1 }}</td>
+                    <td>{{ row.2 }}</td>
+                    <td>{{ row.3 }}</td>
+                    <td>{{ row.4 }}</td>
+                    <td>{{ row.5 }}</td>
+                    <td>{{ row.6 }}</td>
+                    <td>{{ row.7 }}</td>
+                    {% if row.8 %}
+                        <td>
+                            <button class="btn btn-custom btn-primary" style="margin: 5px;">Mulai</button>
+                            <button class="btn btn-custom btn-primary" style="margin: 5px;">Hasil Pertandingan</button>
+                        </td>
+                    {% else %}    
+                        <td><p id="red-size">Kapasitas belum memenuhi</p></td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+{% endblock content %}

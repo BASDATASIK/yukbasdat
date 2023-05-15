@@ -14,4 +14,6 @@ urlpatterns = [
     path('pertandingan/final/', pertandingan_final, name='pertandingan_final'),
     path('pertandingan/perebutan-juara-3/', pertandingan_perebutan_juara_3, name='pertandingan_perebutan_juara_3'),
     path('data-perolehan-poin/', data_perolehan_poin, name='data_perolehan_poin'),
+    path('daftar-atlet/', daftar_atlet, name='daftar_atlet'),
+    path('partai-kompetisi-event/', partai_kompetisi_event, name='partai_kompetisi_event'),
 ]

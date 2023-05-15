@@ -34,13 +34,22 @@ try:
 except (Exception, Error) as error:
     print("Error while connecting to PostgreSQL", error)
 
-def execute_query(query:str) -> list:
+def execute_query(query:str):
     query = query.strip()
     if not (query.endswith(";")):
         query += ";"
     cursor.execute(query)
-    return cursor.fetchall()
+    if (query.upper().startswith("SELECT")):
+        return cursor.fetchall()
+    elif (query.upper().startswith("INSERT")) or (query.upper().startswith("UPDATE")):
+        connection.commit()
 
+def list_tup_to_list_list(lst):
+    ret = []
+    for x in lst:
+        ret.append(list(x))
+    return ret
+    
 def iterate_list(lst):
     for x in lst:
         print(x)
