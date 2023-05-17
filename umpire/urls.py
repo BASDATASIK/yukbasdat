@@ -16,4 +16,5 @@ urlpatterns = [
     path('data-perolehan-poin/', data_perolehan_poin, name='data_perolehan_poin'),
     path('daftar-atlet/', daftar_atlet, name='daftar_atlet'),
     path('partai-kompetisi-event/', partai_kompetisi_event, name='partai_kompetisi_event'),
+    path('hasil-pertandingan/<str:jenis_partai>/<str:nama_event>/<int:tahun_event>/', hasil_pertandingan, name='hasil_pertandingan'),
 ]
