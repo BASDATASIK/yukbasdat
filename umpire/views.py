@@ -125,12 +125,18 @@ def hasil_pertandingan(request, jenis_partai:str, nama_event:str, tahun_event:in
                     flag = flag and (row[0] != bef_obj[0]) and (set(row[1].split(", ")) != set(bef_obj[1].split(", ")))
         return flag
     
+    def seperatePerBabak(babak:str, ori_list):
+        temp = []
+        for row in ori_list:
+            if (row[-1] == babak):
+                temp.append(row)
+        return temp
+    
     ######### SINGLE #########
     if (jenis_partai.strip().endswith("S")):
-        ############### FINAL ###############
-        query_final_s = f'''
+        query_all_match_s = f'''
         SELECT 
-            PMM.nomor_peserta, M.nama, PMM.status_menang
+            PMM.nomor_peserta, M.nama, PMM.status_menang, PMM.jenis_babak
         FROM 
             partai_kompetisi PK 
             INNER JOIN partai_peserta_kompetisi PPK ON 
@@ -139,46 +145,22 @@ def hasil_pertandingan(request, jenis_partai:str, nama_event:str, tahun_event:in
             INNER JOIN peserta_kompetisi PeK ON (PeK.nomor_peserta = PMM.nomor_peserta)
             INNER JOIN member m on (PeK.id_atlet_kualifikasi = M.id)
         WHERE 
-            PMM.jenis_babak = 'Final' AND (PK.jenis_partai = '{jenis_partai}' AND PK.nama_event = '{nama_event}' AND PK.tahun_event = {tahun_event});
+            (PK.jenis_partai = '{jenis_partai}' AND PK.nama_event = '{nama_event}' AND PK.tahun_event = {tahun_event});
         '''
-        list_final_s = list_tup_to_list_list(execute_query(query_final_s))[:2]
+        query_all_match_s = list_tup_to_list_list(execute_query(query_all_match_s))
+        ############### FINAL ###############
+        list_final_s = seperatePerBabak('Final', query_all_match_s)[:2]
         for row in list_final_s:
             first = row if (row[2]) else None
             second = row if (not row[2]) else None
         ############### SEMIFINAL ###############
-        query_semi_s = f'''
-        SELECT 
-            PMM.nomor_peserta, M.nama, PMM.status_menang
-        FROM 
-            partai_kompetisi PK 
-            INNER JOIN partai_peserta_kompetisi PPK ON 
-                (PK.jenis_partai = PPK.jenis_partai AND PK.nama_event = PPK.nama_event AND PK.tahun_event = PK.tahun_event)
-            INNER JOIN peserta_mengikuti_match PMM ON (PMM.nomor_peserta = PPK.nomor_peserta)
-            INNER JOIN peserta_kompetisi PeK ON (PeK.nomor_peserta = PMM.nomor_peserta)
-            INNER JOIN member m on (PeK.id_atlet_kualifikasi = M.id)
-        WHERE 
-            PMM.jenis_babak = 'Semifinal' AND (PK.jenis_partai = '{jenis_partai}' AND PK.nama_event = '{nama_event}' AND PK.tahun_event = {tahun_event});
-        '''
-        list_semi_s = list_tup_to_list_list(execute_query(query_semi_s))[:4]
+        list_semi_s = seperatePerBabak('Semifinal', query_all_match_s)[:4]
         for row in list_semi_s:
             third = row if (not row[2]) else None
-            fourth = row if ((third is not None) and (not row[2])) else None 
+            fourth = row if ((third is not None) and (not row[2])) else None
         ############### PEREMPAT ###############
-        query_16besar_s = f'''
-        SELECT 
-            PMM.nomor_peserta, M.nama, PMM.status_menang
-        FROM 
-            partai_kompetisi PK 
-            INNER JOIN partai_peserta_kompetisi PPK ON 
-                (PK.jenis_partai = PPK.jenis_partai AND PK.nama_event = PPK.nama_event AND PK.tahun_event = PK.tahun_event)
-            INNER JOIN peserta_mengikuti_match PMM ON (PMM.nomor_peserta = PPK.nomor_peserta)
-            INNER JOIN peserta_kompetisi PeK ON (PeK.nomor_peserta = PMM.nomor_peserta)
-            INNER JOIN member m on (PeK.id_atlet_kualifikasi = M.id)
-        WHERE 
-            PMM.jenis_babak = '16 Besar' AND (PK.jenis_partai = '{jenis_partai}' AND PK.nama_event = '{nama_event}' AND PK.tahun_event = {tahun_event});
-        '''
-        query_16besar_s = list_tup_to_list_list(execute_query(query_16besar_s))[:16]
-        for row in query_16besar_s:
+        list_16besar_s = seperatePerBabak('16 Besar', query_all_match_s)[:16]
+        for row in list_16besar_s:
             if ((row[2]) and isNotEqual(row)):
                 perempat_final.append(row)
         
@@ -192,10 +174,9 @@ def hasil_pertandingan(request, jenis_partai:str, nama_event:str, tahun_event:in
 
     ######### DOUBLE #########
     else:
-        ####### FINAL #######
-        query_final_d = f'''
+        query_all_match_d = f'''
         SELECT DISTINCT
-            PeK.nomor_peserta, '' AS nama, PMM.status_menang
+            PeK.nomor_peserta, '' AS nama, PMM.status_menang, PMM.jenis_babak
         FROM 
             partai_kompetisi PK 
             INNER JOIN partai_peserta_kompetisi PPK ON 
@@ -204,11 +185,10 @@ def hasil_pertandingan(request, jenis_partai:str, nama_event:str, tahun_event:in
             INNER JOIN peserta_kompetisi PeK ON (PeK.nomor_peserta = PMM.nomor_peserta)
             INNER JOIN member m on (PeK.id_atlet_kualifikasi = M.id)
         WHERE 
-            PMM.jenis_babak = 'Final' AND
             (PK.jenis_partai = '{jenis_partai}' AND PK.nama_event = '{nama_event}' AND PK.tahun_event = {tahun_event});
         '''
-        list_final_d = list_tup_to_list_list(execute_query(query_final_d))[:2]
-        for row in list_final_d:
+        list_all_match_d = list_tup_to_list_list(execute_query(query_all_match_d))
+        for row in list_all_match_d:
             query_find_partner = f'''
             SELECT 
                 STRING_AGG(m.nama,', ')
@@ -221,68 +201,19 @@ def hasil_pertandingan(request, jenis_partai:str, nama_event:str, tahun_event:in
                   WHERE PeK_sub.nomor_peserta = {row[0]});
             '''
             row[1] = list_tup_to_list_list(execute_query(query_find_partner))[0][0]
+        ####### FINAL #######
+        list_final_d = seperatePerBabak('Final', list_all_match_d)[:2]
+        for row in list_final_d:
             first = row if (row[2]) else None
             second = row if (not row[2]) else None
         ####### SEMIFINAL #######
-        query_semi_d = f'''
-        SELECT DISTINCT
-            PeK.nomor_peserta, '' AS nama, PMM.status_menang
-        FROM 
-            partai_kompetisi PK 
-            INNER JOIN partai_peserta_kompetisi PPK ON 
-                (PK.jenis_partai = PPK.jenis_partai AND PK.nama_event = PPK.nama_event AND PK.tahun_event = PK.tahun_event)
-            INNER JOIN peserta_mengikuti_match PMM ON (PMM.nomor_peserta = PPK.nomor_peserta)
-            INNER JOIN peserta_kompetisi PeK ON (PeK.nomor_peserta = PMM.nomor_peserta)
-            INNER JOIN member m on (PeK.id_atlet_kualifikasi = M.id)
-        WHERE 
-            PMM.jenis_babak = 'Semifinal' AND
-            (PK.jenis_partai = '{jenis_partai}' AND PK.nama_event = '{nama_event}' AND PK.tahun_event = {tahun_event});
-        '''
-        list_semi_d = list_tup_to_list_list(execute_query(query_semi_d))[:4]
+        list_semi_d = seperatePerBabak('Semifinal', list_all_match_d)[:4]
         for row in list_semi_d:
-            query_find_partner = f'''
-            SELECT 
-                STRING_AGG(m.nama,', ')
-            FROM 
-                peserta_kompetisi PeK 
-                INNER JOIN member M ON (M.id = PeK.id_atlet_kualifikasi)
-            WHERE 
-                PeK.id_atlet_ganda IN (
-                  SELECT PeK_sub.id_atlet_ganda FROM peserta_kompetisi PeK_sub
-                  WHERE PeK_sub.nomor_peserta = {row[0]});
-            '''
-            row[1] = list_tup_to_list_list(execute_query(query_find_partner))[0][0]
             third = row if (not row[2]) else None
             fourth = row if ((third is not None) and (not row[2])) else None 
         ####### PEREMPAT #######
-        query_16besar_d = f'''
-        SELECT DISTINCT
-            PeK.nomor_peserta, '' AS nama, PMM.status_menang
-        FROM 
-            partai_kompetisi PK 
-            INNER JOIN partai_peserta_kompetisi PPK ON 
-                (PK.jenis_partai = PPK.jenis_partai AND PK.nama_event = PPK.nama_event AND PK.tahun_event = PK.tahun_event)
-            INNER JOIN peserta_mengikuti_match PMM ON (PMM.nomor_peserta = PPK.nomor_peserta)
-            INNER JOIN peserta_kompetisi PeK ON (PeK.nomor_peserta = PMM.nomor_peserta)
-            INNER JOIN member m on (PeK.id_atlet_kualifikasi = M.id)
-        WHERE 
-            PMM.jenis_babak = '16 Besar' AND
-            (PK.jenis_partai = '{jenis_partai}' AND PK.nama_event = '{nama_event}' AND PK.tahun_event = {tahun_event});
-        '''
-        list_16besar_d = list_tup_to_list_list(execute_query(query_16besar_d))[:16]
+        list_16besar_d = seperatePerBabak('16 Besar', list_all_match_d)[:16]
         for row in list_16besar_d:
-            query_find_partner = f'''
-            SELECT 
-                STRING_AGG(m.nama,', ')
-            FROM 
-                peserta_kompetisi PeK 
-                INNER JOIN member M ON (M.id = PeK.id_atlet_kualifikasi)
-            WHERE 
-                PeK.id_atlet_ganda IN (
-                  SELECT PeK_sub.id_atlet_ganda FROM peserta_kompetisi PeK_sub
-                  WHERE PeK_sub.nomor_peserta = {row[0]});
-            '''
-            row[1] = list_tup_to_list_list(execute_query(query_find_partner))[0][0]
             if ((row[2]) and isNotEqual(row, isSingle=False)):
                 perempat_final.append(row)
 
