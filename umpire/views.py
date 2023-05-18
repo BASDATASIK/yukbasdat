@@ -8,6 +8,7 @@ def show_result(request):
     return render(request, 'hasil_pertandingan.html')
 
 def show_data_result(request):
+    #print( request.session["id"])
     return render(request, 'data_hasil_pertandingan.html')
 
 def pertandingan_semifinal(request):
