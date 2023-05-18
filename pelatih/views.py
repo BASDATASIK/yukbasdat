@@ -9,3 +9,6 @@ def list_atlet(request):
 
 def list_atlet(request):
     return render(request, 'list_atlet.html')
+
+def dashboard(request):
+    return render(request, 'dashboard_pelatih.html')

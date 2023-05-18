@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block meta %}
+<title>Register - BABADU</title>
+<link rel="stylesheet" href="{% static 'auth/css/auth.css' %}">
+{% endblock meta %}
+
+{% block content %}
+<div class="content-container d-flex align-items-center justify-content-center mx-auto">
+	<div class="container col-md-12">
+		<h2><strong>Register</strong></h2>
+		<button type="submit" class="btn btn-primary btn-custom btn-block">Atlet</button>
+        <button type="submit" class="btn btn-primary btn-custom btn-block">Pelatih</button>
+        <button type="submit" class="btn btn-primary btn-custom btn-block">Umpire</button>
+	</div>
+</div>
+{% endblock content %}

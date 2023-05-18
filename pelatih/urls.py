@@ -5,4 +5,5 @@ app_name = 'pelatih'
 urlpatterns = [
     path('daftar_atlet/', daftar_atlet, name='daftar_atlet'),
     path('list_atlet/', list_atlet, name='list_atlet'),
+    path('dashboard/', dashboard, name='dashboard'),
 ]

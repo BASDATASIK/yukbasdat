@@ -18,3 +18,6 @@ def pertandingan_final(request):
 
 def data_perolehan_poin(request):
     return render(request, 'data_perolehan_poin.html')
+
+def dashboard(request):
+    return render(request, 'dashboard_umpire.html')

@@ -21,3 +21,6 @@ def unenrolled_event(request):
 
 def daftar_sponsor(request):
     return render(request, 'daftar_sponsor.html')
+
+def dashboard(request):
+    return render(request, 'dashboard.html')

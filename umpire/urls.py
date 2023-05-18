@@ -12,4 +12,5 @@ urlpatterns = [
     path('pertandingan/semifinal/', pertandingan_semifinal, name='pertandingan_semifinal'),
     path('pertandingan/final/', pertandingan_final, name='pertandingan_final'),
     path('data-perolehan-poin/', data_perolehan_poin, name='data_perolehan_poin'),
+    path('dashboard/', dashboard, name='dashboard'),
 ]
