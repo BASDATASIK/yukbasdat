@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block meta %}
+<title>Home Latih Atlet</title>
+<link rel="stylesheet" href="{% static 'pelatih/css/pelatih.css' %}">
+{% endblock meta %}
+
+{% block content %}
+<style>
+    #inside {
+        text-align: center !important;
+        margin: auto !important;
+    }
+</style>
+
+<div class="content-container d-flex align-items-center justify-content-center mx-auto">
+	<div class="container" id="inside">
+        <h3>LATIH ATLET</h3>
+        <button class="btn btn-custom btn-primary" style="margin: 5px;" 
+          onclick="location.href = '/pelatih/latih-atlet/form/{{id_pelatih}}'">
+            Form Latih Atlet
+        </button>
+        <button class="btn btn-custom btn-primary" style="margin: 5px;" 
+          onclick="location.href = '/pelatih/latih-atlet/list/{{id_pelatih}}'">
+            List Latih Atlet
+        </button>
+	</div>
+</div>
+{% endblock content %}

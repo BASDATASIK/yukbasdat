@@ -34,13 +34,22 @@ try:
 except (Exception, Error) as error:
     print("Error while connecting to PostgreSQL", error)
 
-def execute_query(query:str) -> list:
+def execute_query(query:str):
     query = query.strip()
     if not (query.endswith(";")):
         query += ";"
     cursor.execute(query)
-    return cursor.fetchall()
+    if (query.upper().startswith("SELECT")):
+        return cursor.fetchall()
+    elif (query.upper().startswith("INSERT")) or (query.upper().startswith("UPDATE")) or (query.upper().startswith("CREATE")):
+        connection.commit()
 
+def list_tup_to_list_list(lst):
+    ret = []
+    for x in lst:
+        ret.append(list(x))
+    return ret
+    
 def iterate_list(lst):
     for x in lst:
         print(x)
@@ -48,6 +57,16 @@ def iterate_list(lst):
 
 def exec_and_print(query:str):
     iterate_list(execute_query(query))
+
+# cara pake 
+# queryErrorFlag, queryResult = try_except_query("SELECT ....")
+def try_except_query(query:str):
+    try:
+        return False, execute_query(query)
+    except (Exception, Error) as error:
+        connection.rollback()
+        cursor.execute("SET SEARCH_PATH TO BADMINTON;")
+        return True, error
 
 # test
 if __name__ == '__main__':

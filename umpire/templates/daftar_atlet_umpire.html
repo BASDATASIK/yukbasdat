@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<style>
+    #inside {
+        text-align: center !important;
+        margin: auto !important;
+    }
+</style>
+<div class="content-container d-flex align-items-center justify-content-center mx-auto">
+    <div class="container" id="inside">
+        <h2>DAFTAR ATLET</h2>
+        <h4>ATLET KUALIFIKASI</h4>
+        <table class="table table-bordered table-striped table-hover">
+            <tr>
+              <th>Nama</th>
+              <th>Tanggal Lahir</th>
+              <th>Negara Asal</th>
+              <th>Play Right</th>
+              <th>Height</th>
+              <th>World Rank</th>
+              <th>World Tour Rank</th>
+              <th>Jenis Kelamin</th>
+              <th>Total Point</th>
+            </tr>
+            {% for row in list_atlet_kualifikasi %}
+                <tr>
+                    <td>{{ row.0 }}</td>
+                    <td>{{ row.1 }}</td>
+                    <td>{{ row.2 }}</td>
+                    <td>{{ row.3 }}</td>
+                    <td>{{ row.4 }}</td>
+                    <td>{{ row.5 }}</td>
+                    <td>{{ row.6 }}</td>
+                    <td>{{ row.7 }}</td>
+                    <td>{{ row.8 }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+        <h4>ATLET NON KUALIFIKASI</h4>
+        <table class="table table-bordered table-striped table-hover">
+            <tr>
+              <th>Nama</th>
+              <th>Tanggal Lahir</th>
+              <th>Negara Asal</th>
+              <th>Play Right</th>
+              <th>Height</th>
+              <th>World Rank</th>
+              <th>Jenis Kelamin</th>
+              <th>Total Point</th>
+            </tr>
+            {% for row in list_atlet_non_kualifikasi %}
+                <tr>
+                    <td>{{ row.0 }}</td>
+                    <td>{{ row.1 }}</td>
+                    <td>{{ row.2 }}</td>
+                    <td>{{ row.3 }}</td>
+                    <td>{{ row.4 }}</td>
+                    <td>{{ row.5 }}</td>
+                    <td>{{ row.6 }}</td>
+                    <td>{{ row.7 }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+        <h4>ATLET GANDA</h4>
+        <table class="table table-bordered table-striped table-hover">
+            <tr>
+              <th>ID Atlet Ganda</th>
+              <th>Nama Atlet 1</th>
+              <th>Nama Atlet 2</th>
+              <th>Total Point</th>
+            </tr>
+            {% for row in list_atlet_ganda %}
+                <tr>
+                    <td>{{ row.0 }}</td>
+                    <td>{{ row.1 }}</td>
+                    <td>{{ row.2 }}</td>
+                    <td>{{ row.3 }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+{% endblock content %}
