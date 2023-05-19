@@ -41,7 +41,7 @@ def execute_query(query:str):
     cursor.execute(query)
     if (query.upper().startswith("SELECT")):
         return cursor.fetchall()
-    elif (query.upper().startswith("INSERT")) or (query.upper().startswith("UPDATE")):
+    elif (query.upper().startswith("INSERT")) or (query.upper().startswith("UPDATE")) or (query.upper().startswith("CREATE")):
         connection.commit()
 
 def list_tup_to_list_list(lst):
@@ -57,6 +57,16 @@ def iterate_list(lst):
 
 def exec_and_print(query:str):
     iterate_list(execute_query(query))
+
+# cara pake 
+# queryErrorFlag, queryResult = try_except_query("SELECT ....")
+def try_except_query(query:str):
+    try:
+        return False, execute_query(query)
+    except (Exception, Error) as error:
+        connection.rollback()
+        cursor.execute("SET SEARCH_PATH TO BADMINTON;")
+        return True, error
 
 # test
 if __name__ == '__main__':
