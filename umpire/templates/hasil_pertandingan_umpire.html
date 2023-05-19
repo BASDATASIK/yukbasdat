@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<style>
+    #inside {
+        text-align: center !important;
+        margin: auto !important;
+    }
+    p {
+        display: inline;
+    }
+</style>
+<div class="content-container d-flex align-items-center justify-content-center mx-auto">
+    <div class="container" id="inside">
+        <div class="card">
+            <div class="card-header">
+                <b>HASIL PERTANDINGAN {{ card_partai_event.7 }} - {{ card_partai_event.0 }}</b>
+            </div>
+            <div class="card-body">
+                <p>Nama Event : {{ card_partai_event.0 }}</p><br>
+                <p>Stadium : {{ card_partai_event.1 }}</p><br>
+                <p>Hadiah : {{ card_partai_event.2 }}</p><br>
+                <p>Kategori Superseries : {{ card_partai_event.3 }}</p><br>
+                <p>Tanggal Mulai : {{ card_partai_event.4 }}</p><br>
+                <p>Tanggal Selesai : {{ card_partai_event.5 }}</p><br>
+                <p>Kapasitas : {{ card_partai_event.6 }}</p><br>
+            </div>
+        </div>
+        <table class="table table-bordered table-striped table-hover">
+            <tr>
+              <th>Tahap</th>
+              <th>Nama Tim</th>
+            </tr>
+            <tr>
+                <td>Juara 1</td>
+                <td>{{ first.1 }}</td>
+            </tr>
+            <tr>
+                <td>Juara 2</td>
+                <td>{{ second.1 }}</td>
+            </tr>
+            <tr>
+                <td>Juara 3</td>
+                <td>{{ third.1 }}</td>
+            </tr>
+            <tr>
+                <td>Semifinal</td>
+                <td>{{ fourth.1 }}</td>
+            </tr>
+            {% if len_perempat > 0 %}
+                <tr>
+                    <td>Perempatfinal</td>
+                    <td></td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td rowspan="{{len_perempat}}" style="vertical-align: middle;">Perempatfinal</td>
+                </tr>
+                {% for lst_perempat in perempat_final %}
+                    <tr>
+                        <td>{{lst_perempat.1}}</td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+        </table>
+    </div>
+</div>
+{% endblock content %}

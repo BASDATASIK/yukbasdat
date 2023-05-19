@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block meta %}
+<title>Form Latih Atlet</title>
+<link rel="stylesheet" href="{% static 'atlet/css/atlet.css' %}">
+{% endblock meta %}
+
+{% block content %}
+<style>
+    input, select {
+        float: right;
+        clear: both;
+    }
+    #center {
+        text-align: center !important;
+    }
+</style>
+
+<div class="content-container d-flex align-items-center justify-content-center mx-auto">
+	<div class="container">
+        <h2>FORM LATIH ATLET</h2>
+        {% if errorFlagBefore %}
+            {% if isEndswithSuccess %}
+                <div class="alert alert-success" role="alert">
+                    {{ errorMsgBefore }}
+                </div>
+            {% else %}
+                <div class="alert alert-danger" role="alert" id="center">
+                    {{ errorMsgBefore }}
+                </div>
+            {% endif %}
+        {% endif %}
+        <form method="POST">
+            <p> Atlet yang mau didaftarkan:
+                {% csrf_token %}
+                {{ form.dropdown }} 
+            </p>
+            <button type="submit">Submit</button>
+        </form>
+	</div>
+</div>
+{% endblock content %}

@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block meta %}
+<title>List Latih Atlet</title>
+<link rel="stylesheet" href="{% static 'pelatih/css/pelatih.css' %}">
+{% endblock meta %}
+
+{% block content %}
+<style>
+    #inside {
+        text-align: center !important;
+        margin: auto !important;
+    }
+</style>
+
+<div class="content-container d-flex align-items-center justify-content-center mx-auto">
+	<div class="container" id="inside">
+		<h2>LIST ATLET</h2>
+		<table class="table table-bordered table-striped table-hover">
+			<thead class="text-center">
+			<tr>
+				<th>Nama Atlet</th>
+				<th>Email</th>
+				<th>World rank</th>
+			</tr>
+			</thead>
+			<tbody class="text-center">
+            {% for row in list_list_latih %}
+                <tr>
+                    <td>{{row.0}}</td>
+                    <td>{{row.1}}</td>
+                    <td>{{row.2}}</td>
+                </tr>
+            {% endfor %}
+			</tbody>
+		</table>
+	</div>
+</div>
+{% endblock content %}
