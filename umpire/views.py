@@ -8,6 +8,7 @@ def show_result(request):
     return render(request, 'hasil_pertandingan.html')
 
 def show_data_result(request):
+    #print( request.session["id"])
     return render(request, 'data_hasil_pertandingan.html')
 
 def pertandingan_semifinal(request):
@@ -21,3 +22,9 @@ def data_perolehan_poin(request):
 
 def dashboard(request):
     return render(request, 'dashboard_umpire.html')
+
+def pertandingan_perempatfinal(request):
+    return render(request, 'pertandingan_perempatfinal.html')
+
+def pertandingan_perebutan_juara_3(request):
+    return render(request, 'pertandingan_perebutan_juara_3.html')
