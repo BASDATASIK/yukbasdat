@@ -150,3 +150,7 @@ def list_latih_atlet(request, id_pelatih):
     }
     return render(request, 'list_latih_atlet.html', context)
 
+
+
+def dashboard(request):
+    return render(request, 'dashboard_pelatih.html')

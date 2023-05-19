@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block meta %}
+<title>Register Atlet - BABADU</title>
+<link rel="stylesheet" href="{% static 'auth/css/auth.css' %}">
+{% endblock meta %}
+
+{% block content %}
+<div class="content-container d-flex align-items-center justify-content-center mx-auto">
+	<div class="container">
+		<h2><strong>FORM REGISTRASI ATLET</strong></h2>
+		<form>
+			<div class="form-group">
+				<label for="name">Nama:</label>
+				<input type="text" class="form-control" id="name" placeholder="Masukkan nama" required>
+			</div>
+			<div class="form-group mb-3"> <!-- Tambahkan kelas 'mb-3' di sini -->
+				<label for="email">Email:</label>
+				<input type="email" class="form-control" id="email" placeholder="Masukkan email" required>
+			</div>
+            <div class="form-group mb-3"> <!-- Tambahkan kelas 'mb-3' di sini -->
+				<label for="email">Negara:</label>
+				<input type="email" class="form-control" id="negara" placeholder="Masukkan negara" required>
+			</div>
+            <div class="form-group mb-3"> <!-- Tambahkan kelas 'mb-3' di sini -->
+				<label for="email">Tanggal Lahir:</label>
+				<input type="email" class="form-control" id="tanggal-lahir" placeholder="Masukkan tanggal lahir" required>
+			</div>
+            <div class="form-group mb-3"> <!-- Tambahkan kelas 'mb-3' di sini -->
+				<label for="email">Play:</label>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <input type="radio" id="q1c1" name="question1">
+                        <label for="q1c1">Left</label>
+                    </div>
+                    <div class="col-sm-4">
+                        <input type="radio" id="q1c2" name="question1">
+                        <label for="q1c2">Right</label>
+                    </div>
+                </div>
+			</div>
+            <div class="form-group mb-3"> <!-- Tambahkan kelas 'mb-3' di sini -->
+				<label for="email">Tinggi Badan:</label>
+				<input type="email" class="form-control" id="email" placeholder="Masukkan tinggi badan" required>
+			</div>
+            <div class="form-group mb-3"> <!-- Tambahkan kelas 'mb-3' di sini -->
+				<label for="email">Jenis Kelamin:</label>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <input type="radio" id="q1c1" name="question1">
+                        <label for="q1c1">Laki-laki</label>
+                    </div>
+                    <div class="col-sm-5">
+                        <input type="radio" id="q1c2" name="question1">
+                        <label for="q1c2">Perempuan</label>
+                    </div>
+                </div>
+			</div>
+			<button type="submit" class="btn btn-primary btn-custom btn-block">Daftar</button>
+		</form>
+	</div>
+</div>
+{% endblock content %}
