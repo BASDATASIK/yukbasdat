@@ -9,15 +9,15 @@ def home(request):
 
 def login(request):
     next = request.GET.get("next")
-    # if is_authenticated(request):
-    #     role = getrole(request.session["id"])
-    #     # TODO redirect ke dashboard sesuai rolenya
-    #     if role == "atlet":
-    #         return redirect("/dashboard/atlet")
-    #     if role == "pelatih":
-    #         return redirect("/dashboard/pelatih")
-    #     if role == "umpire":
-    #         return redirect("/dashboard/umpire")
+    if is_authenticated(request):
+        role = getrole(request.session["id"])
+        # TODO redirect ke dashboard sesuai rolenya
+        if role == "atlet":
+            return redirect("/atlet/dashboard")
+        if role == "pelatih":
+            return redirect("/pelatih/dashboard")
+        if role == "umpire":
+            return redirect("/umpire/dashboard")
 
     if request.method == 'POST':
         email = request.POST.get('email')
@@ -34,12 +34,13 @@ def login(request):
                 return redirect(next)
             else:
                 role = getrole(getId[0][0])
+                # TODO redirect ke dashboard sesuai rolenya
                 if role == "atlet":
-                    return redirect("/dashboard/atlet")
+                    return redirect("/atlet/dashboard")
                 if role == "pelatih":
-                    return redirect("/dashboard/pelatih")
+                    return redirect("/pelatih/dashboard")
                 if role == "umpire":
-                    return redirect("/dashboard/umpire")
+                    return redirect("/umpire/dashboard")
 
     return render(request, 'login.html')
 
