@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.shortcuts import redirect
 from utils.query import *
 
 # Create your views here.
@@ -23,6 +24,41 @@ def data_perolehan_poin(request):
 
 def dashboard(request):
     return render(request, 'dashboard_umpire.html')
+
+def create_ujian(request):
+    if request.method == 'POST':
+        # retrieve data from post request
+        tahun = request.POST.get('tahun')
+        batch = request.POST.get('batch')
+        tempat = request.POST.get('location')
+        tanggal = request.POST.get('date')
+
+        # form validation
+        if not tahun or not batch or not tempat or not tanggal:
+            msg = 'Data yang diisikan belum lengkap, silahkan lengkapi data terlebih dahulu'
+            return render(request, 'form_buat_ujian_kualifikasi.html', {'msg': msg})
+
+        # create ujian
+        query = f"INSERT INTO ujian_kualifikasi (tahun, batch, tempat, tanggal) VALUES ('{tahun}', '{batch}', '{tempat}', '{tanggal}')"
+        error, result = try_except_query(query)
+        print(error)
+        if error:
+            msg = "Field yang diisi tidak valid, silahkan isi kembali dengan benar"
+            return render(request, 'form_buat_ujian_kualifikasi.html', {'msg': msg})
+        else:
+            return redirect('umpire:daftar_ujian')
+            
+    print('tes1')
+    return render(request, 'form_buat_ujian_kualifikasi.html', {'msg': ''})
+
+def daftar_ujian(request):
+    list_ujian = execute_query(
+        '''
+        SELECT * FROM ujian_kualifikasi;
+        '''
+    )
+    list_ujian = list_tup_to_list_list(list_ujian)
+    return render(request, 'list_ujian_kualifikasi_umpire.html', {'list_ujian': list_ujian})
 
 def pertandingan_perempatfinal(request):
     return render(request, 'pertandingan_perempatfinal.html')

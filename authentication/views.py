@@ -22,7 +22,14 @@ def login(request):
     if request.method == 'POST':
         email = request.POST.get('email')
         nama = request.POST.get('name')
-        getId = execute_query(f"""SELECT id FROM MEMBER WHERE nama='{nama}' and email = '{email}'""") 
+        error, result = try_except_query(f"""SELECT id FROM MEMBER WHERE nama='{nama}' and email = '{email}'""") 
+        
+        if error:
+            # TODO: implement error handling
+            ...
+        else:
+            getId = result
+        
         flag = is_authenticated(request)
         if getId!=[] and not flag:
             request.session["nama"] = nama

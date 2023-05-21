@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block meta %}
+<title>Daftar Ujian Kualifikasi</title>
+<link rel="stylesheet" href="{% static 'atlet/css/atlet.css' %}">
+{% endblock meta %}
+
+{% block content %}
+<div class="content-container d-flex align-items-center justify-content-center mx-auto">
+	<div class="container">
+		<h2>Daftar Ujian Kualifikasi</h2>
+		<table class="table table-bordered table-striped table-hover">
+			<thead class="text-center">
+			<tr>
+				<th>Tahun</th>
+				<th>Batch</th>
+				<th>Tempat</th>
+				<th>Tanggal</th>
+			</tr>
+			</thead>
+			<tbody class="text-center">
+			{% for ujian in list_ujian %}
+				<tr>
+					<td>{{ ujian.0 }}</td>
+					<td>{{ ujian.1 }}</td>
+					<td>{{ ujian.2 }}</td>
+					<td>{{ ujian.3 }}</td>
+				</tr>
+			{% endfor %}
+			</tbody>
+		</table>
+	</div>
+</div>
+{% endblock content %}
