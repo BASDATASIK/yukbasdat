@@ -305,3 +305,19 @@ def hasil_pertandingan(request, jenis_partai:str, nama_event:str, tahun_event:in
         'len_perempat':len(perempat_final)
     }
     return render(request, 'hasil_pertandingan_umpire.html', context)
+
+def pertandingan(request):
+    query_pertandingan = '''
+    SELECT 
+        M.nama
+    FROM
+        atlet_kualifikasi AK
+        INNER JOIN atlet_kualifikasi AK ON (AK.id_atlet = A.id)
+        LEFT OUTER JOIN point_history PH ON (PH.id_atlet = A.id)
+        INNER JOIN member M ON (A.id = M.id);
+    '''
+    list_atlet_kualifikasi = list_tup_to_list_list(execute_query(query_pertandingan))
+    for row in list_atlet_kualifikasi:
+        row[1] = row[1].strftime("%d %B %Y")
+        row[7] = 'Laki-laki' if (row[7]) else 'Perempuan'
+
