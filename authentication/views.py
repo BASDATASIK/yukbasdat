@@ -26,7 +26,7 @@ def login(request):
         flag = is_authenticated(request)
         if getId!=[] and not flag:
             request.session["nama"] = nama
-            request.session["id"] = getId[0][0]
+            request.session["id"] = str(getId[0][0])
             request.session["role"] = getrole(getId[0][0])
             request.session.set_expiry(500)
             request.session.modified = True
