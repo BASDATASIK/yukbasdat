@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block meta %}
+<title>Form Kualifikasi</title>
+<link rel="stylesheet" href="{% static 'atlet/css/atlet.css' %}">
+<script>
+window.onload = function() {
+    var form = document.getElementById('qualificationForm');
+    var inputs = form.getElementsByTagName('input');
+
+    for (var i = 0; i < inputs.length; i++) {
+        inputs[i].oninvalid = function() {
+            this.setCustomValidity('Data yang diisikan belum lengkap, silahkan lengkapi data terlebih dahulu');
+        };
+        inputs[i].oninput = function() {
+            this.setCustomValidity('');
+        };
+    }
+}
+</script>
+{% endblock meta %}
+
+{% block content %}
+<div class="content-container d-flex align-items-center justify-content-center mx-auto">
+	<div class="container">
+		<h2><strong>FORM BUAT UJIAN KUALIFIKASI</strong></h2>
+
+		{% if msg != "" %}
+		<div class="alert alert-warning" role="alert">
+			{{ msg }}
+		</div>
+		{% endif %}
+
+		<form method="POST" id="qualificationForm">
+			{% csrf_token %}
+			<div class="form-group">
+				<label for="tahun">Tahun:</label>
+				<input type="text" class="form-control" id="tahun" name="tahun" placeholder="Masukkan Tahun" required>
+			</div>
+			<div class="form-group">
+				<label for="batch">Batch:</label>
+				<input type="text" class="form-control" id="batch" name="batch" placeholder="Masukkan nomor batch" required>
+			</div>
+			<div class="form-group">
+				<label for="location">Tempat pelaksanaan:</label>
+				<input type="text" class="form-control" id="location" name="location" placeholder="Masukkan Tempat Pelaksanaan" required>
+			</div>
+			<div class="form-group">
+				<label for="date">Tanggal pelaksanaan:</label>
+				<input type="date" class="form-control" id="date" name="date" required>
+			</div>
+			
+			<button type="submit" class="btn btn-primary btn-custom btn-block">Buat</button>
+		</form>
+	</div>
+</div>
+{% endblock content %}
