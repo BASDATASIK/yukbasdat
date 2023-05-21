@@ -36,7 +36,7 @@
 					</a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 						<a class="dropdown-item" href="{% url 'atlet:daftar_ujian' %}">List Ujian Kualifikasi</a>
-						<a class="dropdown-item" href="#">Riwayat Ujian Kualifikasi</a>
+						<a class="dropdown-item" href="{% url 'atlet:show_riwayat_ujian' %}">Riwayat Ujian Kualifikasi</a>
 					</div>
 				</li>
 				<li class="nav-item dropdown">
@@ -77,7 +77,7 @@
 					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 						<a class="dropdown-item" href="{% url 'umpire:create_ujian' %}">Buat Ujian Kualifikasi</a>
 						<a class="dropdown-item" href="{% url 'umpire:daftar_ujian' %}">List Ujian Kualifikasi</a>
-						<a class="dropdown-item" href="#">Riwayat Ujian Kualifikasi</a>
+						<a class="dropdown-item" href="{% url 'umpire:show_riwayat_ujian' %}">Riwayat Ujian Kualifikasi</a>
 					</div>
 				</li>
 				<li class="nav-item dropdown">

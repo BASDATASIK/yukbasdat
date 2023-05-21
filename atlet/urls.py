@@ -12,4 +12,6 @@ urlpatterns = [
     path('daftar_sponsor/', daftar_sponsor, name='daftar_sponsor'),
     path('dashboard/', dashboard, name='dashboard'),
     path('daftar_ujian/', daftar_ujian, name='daftar_ujian'),
+    path('pertanyaan_kualifikasi/<int:tahun>/<int:batch>/<str:tempat>/<str:tanggal>/', pertanyaan_kualifikasi, name='pertanyaan_kualifikasi'),
+    path('show_riwayat_ujian/', show_riwayat_ujian, name='show_riwayat_ujian'),
 ]

@@ -9,93 +9,115 @@
 <div class="content-container d-flex align-items-center justify-content-center mx-auto">
 	<div class="container">
 		<h2>PERTANYAAN KUALIFIKASI</h2>
-		<form>
+		{% if msg != "" %}
+		<div class="alert alert-warning" role="alert">
+			{{ msg }}
+		</div>
+		{% endif %}
+		<form method="post">
+			{% csrf_token %}
 			<div class="form-group question">
-				<p><strong>Question 1:</strong> Apa nama teknik dasar pukulan dalam badminton yang digunakan untuk mengembalikan bola dengan cepat dan tajam?</p>
+				<p><strong>Question 1:</strong> Apa nama alat yang digunakan untuk memukul shuttlecock dalam permainan bulu tangkis?</p>
 				<div class="row">
-					<div class="col-sm-4">
-						<input type="radio" id="q1c1" name="question1">
-						<label for="q1c1">Drive</label>
+					<div class="col-sm-3">
+						<input type="radio" id="q1c1" name="question1" value="Raket">
+						<label for="q1c1">Raket</label>
 					</div>
-					<div class="col-sm-4">
-						<input type="radio" id="q1c2" name="question1">
-						<label for="q1c2">Smash</label>
+					<div class="col-sm-3">
+						<input type="radio" id="q1c2" name="question1" value="Shuttlecock">
+						<label for="q1c2">Shuttlecock</label>
 					</div>
-					<div class="col-sm-4">
-						<input type="radio" id="q1c3" name="question1">
-						<label for="q1c3">Drop shot</label>
+					<div class="col-sm-3">
+						<input type="radio" id="q1c3" name="question1" value="Net">
+						<label for="q1c3">Net</label>
+					</div>
+					<div class="col-sm-3">
+						<input type="radio" id="q1c4" name="question1" value="Lapangan">
+						<label for="q1c4">Lapangan</label>
 					</div>
 				</div>
 			</div>
 			<div class="form-group question">
-				<p><strong>Question 2:</strong> Berapakah jumlah pemain maksimum dalam satu tim ganda campuran dalam badminton?</p>
+				<p><strong>Question 2:</strong> Dasar yang bisa menghasilkan pukulan berkualitas dalam olahraga bulu tangkis adalah apabila dilakukan dalam posisi baik disebut dengan ...</p>
 				<div class="row">
-					<div class="col-sm-4">
-						<input type="radio" id="q2c1" name="question1">
-						<label for="q2c1">2</label>
+					<div class="col-sm-3">
+						<input type="radio" id="q2c1" name="question2" value="Preparation">
+						<label for="q2c1">Preparation</label>
 					</div>
-					<div class="col-sm-4">
-						<input type="radio" id="q2c2" name="question1">
-						<label for="q2c2">4</label>
+					<div class="col-sm-3">
+						<input type="radio" id="q2c2" name="question2" value="Footwork">
+						<label for="q2c2">Footwork</label>
 					</div>
-					<div class="col-sm-4">
-						<input type="radio" id="q2c3" name="question1">
-						<label for="q2c3">6</label>
+					<div class="col-sm-3">
+						<input type="radio" id="q2c3" name="question2" value="Drive">
+						<label for="q2c3">Drive</label>
+					</div>
+					<div class="col-sm-3">
+						<input type="radio" id="q2c4" name="question2" value="Lob">
+						<label for="q2c4">Lob</label>
 					</div>
 				</div>
 			</div>
 			<div class="form-group question">
-				<p><strong>Question 3:</strong> Lorem ipsum?</p>
+				<p><strong>Question 3:</strong> Apa istilah yang digunakan saat kedudukan permainan bulu tangkis adalah 29-29?</p>
 				<div class="row">
-					<div class="col-sm-4">
-						<input type="radio" id="q3c1" name="question1">
-						<label for="q3c1">2</label>
+					<div class="col-sm-3">
+						<input type="radio" id="q3c1" name="question3" value="Match Point">
+						<label for="q3c1">Match Point</label>
 					</div>
-					<div class="col-sm-4">
-						<input type="radio" id="q3c2" name="question1">
-						<label for="q3c2">4</label>
+					<div class="col-sm-3">
+						<input type="radio" id="q3c2" name="question3" value="Set Point">
+						<label for="q3c2">Set Point</label>
 					</div>
-					<div class="col-sm-4">
-						<input type="radio" id="q3c3" name="question1">
-						<label for="q3c3">6</label>
+					<div class="col-sm-3">
+						<input type="radio" id="q3c3" name="question3" value="Game Point">
+						<label for="q3c3">Game Point</label>
+					</div>
+					<div class="col-sm-3">
+						<input type="radio" id="q3c4" name="question3" value="Deuce">
+						<label for="q3c4">Deuce</label>
 					</div>
 				</div>
 			</div>
 			<div class="form-group question">
-				<p><strong>Question 4:</strong> Lorem ipsum dolor sit amet, consectetur ?</p>
+				<p><strong>Question 4:</strong> Shuttlecock dalam permainan badminton terbuat dari bahan apa?</p>
 				<div class="row">
-					<div class="col-sm-4">
-						<input type="radio" id="q4c1" name="question1">
-						<label for="q4c1">2</label>
+					<div class="col-sm-3">
+						<input type="radio" id="q4c1" name="question4" value="Plastik">
+						<label for="q4c1">Plastik</label>
 					</div>
-					<div class="col-sm-4">
-						<input type="radio" id="q4c2" name="question1">
-						<label for="q4c2">4</label>
+					<div class="col-sm-3">
+						<input type="radio" id="q4c2" name="question4" value="Karet">
+						<label for="q4c2">Karet</label>
 					</div>
-					<div class="col-sm-4">
-						<input type="radio" id="q4c3" name="question1">
-						<label for="q4c3">6</label>
+					<div class="col-sm-3">
+						<input type="radio" id="q4c3" name="question4" value="Bulu burung">
+						<label for="q4c3">Bulu burung</label>
+					</div>
+					<div class="col-sm-3">
+						<input type="radio" id="q4c4" name="question4" value="Logam">
+						<label for="q4c4">Logam</label>
 					</div>
 				</div>
 			</div>
 			<div class="form-group question">
-				<p><strong>Question 5:</strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci aperiam consequuntur deleniti, distinctio, dolorum enim eos exercitationem hic labore molestiae Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid aperiam at cumque illum ipsum libero magni, minima mollitia non officiis omnis porro quia quibusdam quidem recusandae, sit tempore vitae voluptatibus.?</p>
+				<p><strong>Question 5:</strong> Berapa jumlah poin maksimum yang bisa dicapai dalam satu set permainan badminton?</p>
 				<div class="row">
-					<div class="col-sm-4">
-						<input type="radio" id="q5c1" name="question1">
-						<label for="q5c1">2</label>
+					<div class="col-sm-3">
+						<input type="radio" id="q5c1" name="question5" value="21">
+						<label for="q5c1">21</label>
 					</div>
-					<div class="col-sm-4">
-						<input type="radio" id="q5c2" name="question1">
-						<label for="q5c2">4</label>
+					<div class="col-sm-3">
+						<input type="radio" id="q5c2" name="question5" value="20">
+						<label for="q5c2">20</label>
 					</div>
-					<div class="col-sm-4">
-						<input type="radio" id="q5c3" name="question1">
-						<label for="q5c3">6</label>
+					<div class="col-sm-3">
+						<input type="radio" id="q5c3" name="question5" value="25">
+						<label for="q5c3">25</label>
 					</div>
-					<div class="col-sm-4">
-						<input type="radio" id="q5c4" name="question1">
-						<label for="q5c4">6</label>
+					<div class="col-sm-3">
+						<input type="radio" id="q5c4" name="question5" value="30">
+						<label for="q5c4">30</label>
 					</div>
 				</div>
 			</div>
