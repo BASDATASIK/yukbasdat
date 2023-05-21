@@ -80,8 +80,12 @@ WSGI_APPLICATION = 'babadu.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': 'FPIEI3SWrANKKqu',
+        'HOST': 'db.vzlihbczeroazalcaazw.supabase.co',
+        'PORT': '5432',
     }
 }
 
@@ -209,8 +213,12 @@ WSGI_APPLICATION = 'babadu.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': 'FPIEI3SWrANKKqu',
+        'HOST': 'db.vzlihbczeroazalcaazw.supabase.co',
+        'PORT': '5432',
     }
 }
 
