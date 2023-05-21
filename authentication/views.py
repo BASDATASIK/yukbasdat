@@ -2,6 +2,7 @@ from django.shortcuts import render
 from utils.query import *
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
+import uuid
 
 # Create your views here.
 def home(request):
@@ -51,16 +52,73 @@ def register(request):
     return render(request, 'register.html')
 
 def register_atlet(request):
-    return render(request, 'register_atlet.html')
+     # TODO: implement trigger auth
+    if request.method == 'POST':
+        id = uuid.uuid4()
+        name = request.POST.get('nama')
+        negara = request.POST.get('negara')
+        email = request.POST.get('email')
+        birthdate = request.POST.get('birthdate')
+        play = request.POST.get('nomerhp')
+        pelatih = request.POST.get('nama_pelatih')
+        worldRank = request.POST.get('nomerhp')
+        tinggiBadan = request.POST.get('height')
+        status = request.POST.get('nomerhp')
+        totalPoin = request.POST.get('nomerhp')
+
+        emailCheck = execute_query(f"""SELECT * FROM MEMBER WHERE email='{email}'""") 
+        if emailCheck==[]:
+            execute_query(f"""INSERT INTO MEMBER VALUES ('{id}', '{name}', '{email}')""")
+            execute_query(f"""INSERT INTO ATLET VALUES ('{id}', '{birthdate}', '{negara}', '{play}', '{tinggiBadan}', '{worldRank}', '{play}')""")
+
+        context = {'message': "Email sudah pernah terdaftar"}
+        return render(request, 'register_atlet.html', context)
+    
+    context = {'message': ""}
+    return render(request, "register_atlet.html",context)
+
 
 def register_pelatih(request):
-    return render(request, 'register_pelatih.html')
+    if request.method == 'POST':
+        id = uuid.uuid4()
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        startdate = request.POST.get('startdate')
+
+        emailCheck = execute_query(f"""SELECT * FROM MEMBER WHERE email='{email}'""") 
+        if emailCheck==[]:
+            execute_query(f"""INSERT INTO MEMBER VALUES ('{id}', '{name}', '{email}')""")
+            execute_query(f"""INSERT INTO PELATIH VALUES ('{id}', '{startdate}')""")
+
+        context = {'message': "Email sudah pernah terdaftar"}
+        return render(request, 'register_pelatih.html', context)
+
+    context = {'message': ""}
+    return render(request, "register_pelatih.html",context)
+
 
 def register_umpire(request):
-    return render(request, 'register_umpire.html')
+    # TODO: implement trigger auth
+    if request.method == 'POST':
+        id = uuid.uuid4()
+        name = request.POST.get('name')
+        negara = request.POST.get('negara')
+        email = request.POST.get('email')
+
+        emailCheck = execute_query(f"""SELECT * FROM MEMBER WHERE email='{email}'""") 
+        if emailCheck==[]:
+            execute_query(f"""INSERT INTO MEMBER VALUES ('{id}', '{name}', '{email}')""")
+            execute_query(f"""INSERT INTO PELATIH VALUES ('{id}', '{negara}')""")
+
+        context = {'message': "Email sudah pernah terdaftar"}    
+        return render(request, 'register_umpire.html')
+
+    context = {'message': ""}
+    render(request, "register_umpire.html",context)
+
 def getrole(Id):
     atletCheck = execute_query(f"""SELECT * FROM atlet WHERE id ='{Id}'""") 
-    pelatihCheck = execute_query(f"""SELECT * FROM pelatih WHERE id ='{Id}'""") 
+    pelatihCheck = execute_query(f"""SELECT FROM pelatih WHERE id ='{Id}'""") 
     umpireCheck = execute_query(f"""SELECT * FROM umpire WHERE id ='{Id}'""") 
 
     if atletCheck!=[]:
@@ -91,10 +149,3 @@ def logout(request):
     else:
         return redirect("/")
     
-def register_admin(request):
-    # TODO: implement trigger auth
-    if request.method == 'POST':
-        email = request.POST.get('email')
-        password = request.POST.get('password')
-        nama = request.POST.get('nama')
-        nomerhp = request.POST.get('nomerhp')
