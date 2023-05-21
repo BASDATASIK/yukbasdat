@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block meta %}
-<title>Daftar Ujian Kualifikasi</title>
+<title>Riwayat Ujian Kualifikasi</title>
 <link rel="stylesheet" href="{% static 'atlet/css/atlet.css' %}">
 {% endblock meta %}
 
 {% block content %}
 <div class="content-container d-flex align-items-center justify-content-center mx-auto">
 	<div class="container">
-		<h2>Daftar Ujian Kualifikasi</h2>
+		<h2>Riwayat Ujian Kualifikasi</h2>
 		<table class="table table-bordered table-striped table-hover">
 			<thead class="text-center">
 			<tr>
@@ -16,17 +16,21 @@
 				<th>Batch</th>
 				<th>Tempat</th>
 				<th>Tanggal</th>
-				<th></th>
+				<th>Hasil</th>
 			</tr>
 			</thead>
 			<tbody class="text-center">
-			{% for ujian in list_ujian %}
+			{% for ujian in riwayat_ujian %}
 				<tr>
-					<td>{{ ujian.0 }}</td>
 					<td>{{ ujian.1 }}</td>
 					<td>{{ ujian.2 }}</td>
 					<td>{{ ujian.3 }}</td>
-					<td><a href="{% url 'atlet:pertanyaan_kualifikasi' ujian.0 ujian.1 ujian.2 ujian.3 %}" class="btn btn-custom btn-primary">Ikuti</a></td>
+					<td>{{ ujian.4 }}</td>
+                    {% if ujian.5 %}
+                        <td>Lulus</td>
+                    {% else %}
+                        <td>Tidak Lulus</td>
+                    {% endif %}
 				</tr>
 			{% endfor %}
 			</tbody>

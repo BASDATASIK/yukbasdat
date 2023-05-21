@@ -20,4 +20,6 @@ urlpatterns = [
     path('dashboard/', dashboard, name='dashboard'),
     path('create_ujian/', create_ujian, name='create_ujian'),
     path('daftar_ujian/', daftar_ujian, name='daftar_ujian'),
+    path('show_riwayat_ujian/', show_riwayat_ujian, name='show_riwayat_ujian'),
+
 ]

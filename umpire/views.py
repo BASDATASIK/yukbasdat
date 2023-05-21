@@ -13,6 +13,16 @@ def show_data_result(request):
     #print( request.session["id"])
     return render(request, 'data_hasil_pertandingan.html')
 
+def show_riwayat_ujian(request):
+    query = """
+            SELECT nama, tahun, batch, tempat, tanggal, hasil_lulus
+            FROM atlet_nonkualifikasi_ujian_kualifikasi
+            JOIN member m on m.id = atlet_nonkualifikasi_ujian_kualifikasi.id_atlet;
+            """
+    error, result = try_except_query(query)
+    result = list_tup_to_list_list(result)
+    return render(request, 'riwayat_ujian_umpire.html', {'riwayat_ujian': result})
+
 def pertandingan_semifinal(request):
     return render(request, 'pertandingan_semifinal.html')
 
@@ -41,7 +51,6 @@ def create_ujian(request):
         # create ujian
         query = f"INSERT INTO ujian_kualifikasi (tahun, batch, tempat, tanggal) VALUES ('{tahun}', '{batch}', '{tempat}', '{tanggal}')"
         error, result = try_except_query(query)
-        print(error)
         if error:
             msg = "Field yang diisi tidak valid, silahkan isi kembali dengan benar"
             return render(request, 'form_buat_ujian_kualifikasi.html', {'msg': msg})
