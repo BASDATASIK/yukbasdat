@@ -53,18 +53,12 @@ def form_latih_atlet(request, id_pelatih):
     $$
     DECLARE
         count_pelatih INTEGER;
-        remove_id_pelatih UUID;
     BEGIN 
         SELECT COUNT(DISTINCT AP.id_pelatih) INTO count_pelatih
         FROM atlet_pelatih AP 
         WHERE (AP.id_atlet = NEW.id_atlet);
         
         IF (count_pelatih >= 2) THEN
-            SELECT AP.id_pelatih INTO remove_id_pelatih
-            FROM atlet_pelatih AP 
-            WHERE (AP.id_atlet = NEW.id_atlet)
-            LIMIT 1;
-
             RAISE EXCEPTION 'Atlet sudah dilatih 2 pelatih. Removing salah satu ... -> SUCCESS';
         END IF;
         

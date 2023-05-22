@@ -95,14 +95,38 @@ def register_pelatih(request):
         name = request.POST.get('name')
         email = request.POST.get('email')
         startdate = request.POST.get('startdate')
+        spesialisasi = {
+            "tunggal_putra":request.POST.get('tunggal_putra'),
+            "tunggal_putri":request.POST.get('tunggal_putri'),
+            "ganda_putra":request.POST.get('ganda_putra'),
+            "ganda_putri":request.POST.get('ganda_putri'),
+            "ganda_campuran":request.POST.get('ganda_campuran')
+        }
+        id_spesialisasi = {
+            "tunggal_putra":str(execute_query("SELECT S.id FROM spesialisasi S WHERE S.spesialisasi = 'Tunggal Putra';")[0][0]),
+            "tunggal_putri":str(execute_query("SELECT S.id FROM spesialisasi S WHERE S.spesialisasi = 'Tunggal Putri';")[0][0]),
+            "ganda_putra":str(execute_query("SELECT S.id FROM spesialisasi S WHERE S.spesialisasi = 'Ganda Putra';")[0][0]),
+            "ganda_putri":str(execute_query("SELECT S.id FROM spesialisasi S WHERE S.spesialisasi = 'Ganda Putri';")[0][0]),
+            "ganda_campuran":str(execute_query("SELECT S.id FROM spesialisasi S WHERE S.spesialisasi = 'Ganda Campuran';")[0][0])
+        }
+
+        ######### TEST #########
+        data_pelatih = [id, name, email, startdate, spesialisasi, id_spesialisasi]
+        str_data_pelatih = ["id", "name", "email", "startdate", "spesialisasi", "id_spesialisasi"]
+        for x in range(len(data_pelatih)):
+            print(f"{str_data_pelatih[x]} : {data_pelatih[x]}")
+        ########################
 
         emailCheck = execute_query(f"""SELECT * FROM MEMBER WHERE email='{email}'""") 
         if emailCheck==[]:
             execute_query(f"""INSERT INTO MEMBER VALUES ('{id}', '{name}', '{email}')""")
             execute_query(f"""INSERT INTO PELATIH VALUES ('{id}', '{startdate}')""")
-
-        context = {'message': "Email sudah pernah terdaftar"}
-        return render(request, 'register_pelatih.html', context)
+            for key_spesialisasi in spesialisasi:
+                if (spesialisasi[key_spesialisasi] is not None):
+                    execute_query(f"INSERT INTO PELATIH_SPESIALISASI VALUES ('{id}','{id_spesialisasi[key_spesialisasi]}');")
+        else:
+            context = {'message': "Email sudah pernah terdaftar"}
+            return render(request, 'register_pelatih.html', context)
 
     context = {'message': ""}
     return render(request, "register_pelatih.html",context)
