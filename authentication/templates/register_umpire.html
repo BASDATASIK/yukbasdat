@@ -6,10 +6,28 @@
 {% endblock meta %}
 
 {% block content %}
+<style>
+    #center {
+        text-align: center !important;
+    }
+</style>
+
 <div class="content-container d-flex align-items-center justify-content-center mx-auto">
 	<div class="container">
 		<h2><strong>FORM REGISTRASI UMPIRE</strong></h2>
-		<form>
+		{% if message %}
+			{% if isSuccess %}
+				<div class="alert alert-success" role="alert" id="center">
+					{{ message }}
+				</div>
+			{% else %}
+                <div class="alert alert-danger" role="alert" id="center">
+                    {{ message }}
+                </div>
+			{% endif %}
+		{% endif %}
+		<form method="POST">
+			{% csrf_token %}
 			<div class="form-group">
 				<label for="name">Nama:</label>
 				<input type="text" class="form-control" id="name" name="name" placeholder="Masukkan nama" required>
@@ -20,7 +38,7 @@
 			</div>
             <div class="form-group mb-3"> <!-- Tambahkan kelas 'mb-3' di sini -->
 				<label for="email">Negara:</label>
-				<input type="email" class="form-control" id="negara" name="negara" placeholder="Masukkan negara" required>
+				<input type="text" class="form-control" id="negara" name="negara" placeholder="Masukkan negara" required>
 			</div>
 			<button type="submit" class="btn btn-primary btn-custom btn-block">Daftar</button>
 		</form>

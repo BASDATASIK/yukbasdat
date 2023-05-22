@@ -6,9 +6,26 @@
 {% endblock meta %}
 
 {% block content %}
+<style>
+    #center {
+        text-align: center !important;
+    }
+</style>
+
 <div class="content-container d-flex align-items-center justify-content-center mx-auto">
 	<div class="container">
 		<h2><strong>FORM REGISTRASI PELATIH</strong></h2>
+		{% if message %}
+			{% if isSuccess %}
+				<div class="alert alert-success" role="alert" id="center">
+					{{ message }}
+				</div>
+			{% else %}
+                <div class="alert alert-danger" role="alert" id="center">
+                    {{ message }}
+                </div>
+			{% endif %}
+		{% endif %}
 		<form method="POST">
             {% csrf_token %}
 			<div class="form-group">

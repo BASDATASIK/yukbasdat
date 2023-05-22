@@ -80,9 +80,11 @@ def register_atlet(request):
             execute_query(f"""INSERT INTO ATLET VALUES 
                 ('{id}', '{birthdate}', '{negara}', {play}, '{tinggiBadan}', NULL, {gender});""")
             execute_query(f"INSERT INTO ATLET_NON_KUALIFIKASI VALUES ('{id}');")
+            context = {'message': "Data telah terdaftar", "isSuccess":True}
+            return render(request, 'register_pelatih.html', context)
         else:
             print("Email sudah pernah terdaftar")
-            context = {'message': "Email sudah pernah terdaftar"}
+            context = {'message': "Email sudah pernah terdaftar", "isSuccess":False}
             return render(request, 'register_atlet.html', context)
     
     context = {'message': ""}
@@ -124,8 +126,10 @@ def register_pelatih(request):
             for key_spesialisasi in spesialisasi:
                 if (spesialisasi[key_spesialisasi] is not None):
                     execute_query(f"INSERT INTO PELATIH_SPESIALISASI VALUES ('{id}','{id_spesialisasi[key_spesialisasi]}');")
+            context = {'message': "Data telah terdaftar", "isSuccess":True}
+            return render(request, 'register_pelatih.html', context)
         else:
-            context = {'message': "Email sudah pernah terdaftar"}
+            context = {'message': "Email sudah pernah terdaftar", "isSuccess":False}
             return render(request, 'register_pelatih.html', context)
 
     context = {'message': ""}
@@ -137,19 +141,28 @@ def register_umpire(request):
     if request.method == 'POST':
         id = uuid.uuid4()
         name = request.POST.get('name')
-        negara = request.POST.get('negara')
         email = request.POST.get('email')
+        negara = request.POST.get('negara')
+
+        ######### TEST #########
+        data_umpire = [id, name, email, negara]
+        str_data_umpire = ["id", "name", "email", "negara"]
+        for x in range(len(data_umpire)):
+            print(f"{str_data_umpire[x]} : {data_umpire[x]}")
+        ########################
 
         emailCheck = execute_query(f"""SELECT * FROM MEMBER WHERE email='{email}'""") 
         if emailCheck==[]:
             execute_query(f"""INSERT INTO MEMBER VALUES ('{id}', '{name}', '{email}')""")
-            execute_query(f"""INSERT INTO PELATIH VALUES ('{id}', '{negara}')""")
-
-        context = {'message': "Email sudah pernah terdaftar"}    
-        return render(request, 'register_umpire.html')
+            execute_query(f"""INSERT INTO UMPIRE VALUES ('{id}', '{negara}')""")
+            context = {'message': "Data telah terdaftar", "isSuccess":True}
+            return render(request, 'register_umpire.html', context)
+        else:
+            context = {'message': "Email sudah pernah terdaftar", "isSuccess":False}    
+            return render(request, 'register_umpire.html',context)
 
     context = {'message': ""}
-    render(request, "register_umpire.html",context)
+    return render(request, "register_umpire.html",context)
 
 def getrole(Id):
     atletCheck = execute_query(f"""SELECT * FROM atlet WHERE id ='{Id}'""") 
