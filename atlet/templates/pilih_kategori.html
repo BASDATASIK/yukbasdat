@@ -1,32 +1,56 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block meta %}
-<title>Daftar Event</title>
+<title>FORM PEMILIHAN PARTAI KOMPETISI</title>
 <link rel="stylesheet" href="{% static 'atlet/css/atlet.css' %}">
 {% endblock meta %}
 
 {% block content %}
 <div class="content-container d-flex align-items-center justify-content-center mx-auto">
 	<div class="container">
-		<h3 class="text-center"><strong>Pilih Kategori</strong></h3>
-		<p><strong>Event:</strong> EventA</p>
-		<p><strong>Hadiah:</strong> Rp 5.000.000</p>
-		<p><strong>Tanggal Mulai:</strong> 12-04-2023</p>
-		<p><strong>Tanggal Selesai:</strong> 15-04-2023</p>
-		<p><strong>Kategori:</strong> S200</p>
-		<p><strong>Kapasitas:</strong> 50/64</p>
-		<p><strong>Stadium:</strong> GBK</p>
-		<p><strong>Negara:</strong> Indonesia</p>
+		<h3 class="text-center"><strong>FORM PEMILIHAN PARTAI KOMPETISI</strong></h3>
+		<p><strong>Event:</strong> {{ event.0 }}</p>
+		<p><strong>Hadiah:</strong> {{ event.7 }}</p>
+		<p><strong>Tanggal Mulai:</strong> {{ event.4 }}</p>
+		<p><strong>Tanggal Selesai:</strong> {{ event.5 }}</p>
+		<p><strong>Kategori:</strong> {{ event.6 }}</p>
+		<p><strong>Kapasitas:</strong> {{ event.10 }}</p>
+		<p><strong>Stadium:</strong> {{ event.2 }}</p>
+		<p><strong>Negara:</strong> {{ event.3 }}</p>
+		<hr>
 		<table class="table table-bordered table-striped table-hover">
 			<thead class="text-center">
 			<tr>
 				<th>Kategori</th>
 				<th>Partner</th>
+				<th>Kapasitas</th>
 				<th></th>
 			</tr>
 			</thead>
 			<tbody class="text-center">
+			{% for partai in list_partai_kompetisi %}
 			<tr>
+				<td>{{ partai.0 }}</td>
+				<td>
+					{% if partai.0 == 'Tunggal Putra' or partai.0 == 'Tunggal Putri' %}
+					<p>-</p>
+					{% else %}
+					<select class="custom-select">
+						<option selected>Atlet 1</option>
+						<option value="1">Atlet 2</option>
+						<option value="2">Atlet 3</option>
+						<option value="3">Atlet 4</option>
+					</select>
+					{% endif %}
+				</td>
+				<td>{{ event.10 }}</td>
+				<td><button class="btn btn-custom btn-primary">Join</button></td>
+			</tr>
+			{% endfor %}
+
+
+
+			{% comment %} <tr>
 				<td>Tunggal Putra</td>
 				<td>-</td>
 				<td><button class="btn btn-custom btn-primary">Join</button></td>
@@ -54,7 +78,7 @@
 					</select>
 				</td>
 				<td><button class="btn btn-custom btn-primary">Join</button></td>
-			</tr>
+			</tr> {% endcomment %}
 			</tbody>
 		</table>
 	</div>

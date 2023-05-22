@@ -58,12 +58,48 @@ def daftar_stadium(request):
 def daftar_event(request, stadium):
     query = f"SELECT * FROM event WHERE nama_stadium = '{stadium}' AND event.tgl_mulai > CURRENT_DATE;"
     error, result = try_except_query(query)
-    print(result)
     result = list_tup_to_list_list(result)
     return render(request, 'daftar_event.html', {'list_event': result})
 
-def pilih_kategori(request):
-    return render(request, 'pilih_kategori.html')
+def pilih_kategori(request, nama_event, tahun):
+    query = f"SELECT * FROM event join stadium s on event.nama_stadium = s.nama WHERE nama_event = '{nama_event}' AND tahun = {tahun};"
+    error, result = try_except_query(query)
+    result = list_tup_to_list_list(result)
+    result = result[0]
+
+    query = f"SELECT * FROM partai_kompetisi WHERE nama_event = '{nama_event}' AND tahun_event = {tahun};"
+    error, list_partai_kompetisi = try_except_query(query)
+    list_partai_kompetisi = list_tup_to_list_list(list_partai_kompetisi)
+    print(list_partai_kompetisi)
+
+    for i in range(len(list_partai_kompetisi)):
+        if list_partai_kompetisi[i][0] == 'MS':
+            list_partai_kompetisi[i][0] = 'Tunggal Putra'
+        elif list_partai_kompetisi[i][0] == 'WS':
+            list_partai_kompetisi[i][0] = 'Tunggal Putri'
+        elif list_partai_kompetisi[i][0] == 'MD':
+            list_partai_kompetisi[i][0] = 'Ganda Putra'
+        elif list_partai_kompetisi[i][0] == 'WD':
+            list_partai_kompetisi[i][0] = 'Ganda Putri'
+        elif list_partai_kompetisi[i][0] == 'XD':
+            list_partai_kompetisi[i][0] = 'Ganda Campuran'
+
+    query = f"SELECT jenis_kelamin FROM atlet WHERE id = '{request.session['id']}';"
+    error, jenis_kelamin = try_except_query(query)
+    jenis_kelamin = jenis_kelamin[0][0]
+    if str(jenis_kelamin) == 'False': # Putri
+        list_partai_kompetisi = [x for x in list_partai_kompetisi if x[0] != 'Tunggal Putra' and x[0] != 'Ganda Putra']
+    else: # Putra
+        list_partai_kompetisi = [x for x in list_partai_kompetisi if x[0] != 'Tunggal Putri' and x[0] != 'Ganda Putri']
+
+    query = f"SELECT * FROM atlet_ganda where id_atlet_kualifikasi = '{request.session['id']}' or id_atlet_kualifikasi_2 = '{request.session['id']}';"
+    error, atlet_ganda = try_except_query(query)
+    atlet_ganda = list_tup_to_list_list(atlet_ganda)
+    if len(atlet_ganda) > 0:
+        is_atlet_ganda = True
+    else:
+        is_atlet_ganda = False
+    return render(request, 'pilih_kategori.html', {'event': result, 'list_partai_kompetisi': list_partai_kompetisi, 'is_atlet_ganda': is_atlet_ganda})
 
 def unenrolled_event(request):
     return render(request, 'unenrolled_event.html')
