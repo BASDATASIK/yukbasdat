@@ -12,25 +12,24 @@
 		<table class="table table-bordered table-striped table-hover">
 			<thead class="text-center">
 			<tr>
-				<th>Nama</th>
-				<th>Stadium Negara</th>
-				<th>Kapasitas</th>
+				<th>Nama Event</th>
+				<th>Total Hadiah</th>
+				<th>Tanggal Mulai</th>
+				<th>Kategori</th>
 				<th></th>
 			</tr>
 			</thead>
 			<tbody class="text-center">
+			{% for event in list_event %}
 			<tr>
-				<td>GBK</td>
-				<td>Indonesia</td>
-				<td>8</td>
+				<td>{{ event.0 }}</td>
+				<td>{{ event.7 }}</td>
+				<td>{{ event.4 }}</td>
+				<td>{{ event.6 }}</td>
 				<td><button class="btn btn-custom btn-primary">Pilih</button></td>
 			</tr>
-			<tr>
-				<td>Senayan</td>
-				<td>Indonesia</td>
-				<td>16</td>
-				<td><button class="btn btn-custom btn-primary">Pilih</button></td>
-			</tr>
+			{% endfor %}
+			
 			</tbody>
 		</table>
 	</div>
