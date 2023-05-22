@@ -62,24 +62,28 @@ def register_atlet(request):
      # TODO: implement trigger auth
     if request.method == 'POST':
         id = uuid.uuid4()
-        name = request.POST.get('nama')
+        name = request.POST.get('name')
         negara = request.POST.get('negara')
         email = request.POST.get('email')
         birthdate = request.POST.get('birthdate')
-        play = request.POST.get('nomerhp')
-        pelatih = request.POST.get('nama_pelatih')
-        worldRank = request.POST.get('nomerhp')
+        play = "FALSE" if (f"{request.POST.get('question1')}"=="on") else "TRUE"
         tinggiBadan = request.POST.get('height')
-        status = request.POST.get('nomerhp')
-        totalPoin = request.POST.get('nomerhp')
+        gender = "TRUE" if (f"{request.POST.get('question2')}"=="on") else "FALSE"
+        # pelatih = request.POST.get('nama_pelatih')
+        # worldRank = request.POST.get('nomerhp')
+        # status = request.POST.get('nomerhp')
+        # totalPoin = request.POST.get('nomerhp')
 
         emailCheck = execute_query(f"""SELECT * FROM MEMBER WHERE email='{email}'""") 
         if emailCheck==[]:
-            execute_query(f"""INSERT INTO MEMBER VALUES ('{id}', '{name}', '{email}')""")
-            execute_query(f"""INSERT INTO ATLET VALUES ('{id}', '{birthdate}', '{negara}', '{play}', '{tinggiBadan}', '{worldRank}', '{play}')""")
-
-        context = {'message': "Email sudah pernah terdaftar"}
-        return render(request, 'register_atlet.html', context)
+            execute_query(f"""INSERT INTO MEMBER VALUES ('{id}', '{name}', '{email}');""")
+            execute_query(f"""INSERT INTO ATLET VALUES 
+                ('{id}', '{birthdate}', '{negara}', {play}, '{tinggiBadan}', NULL, {gender});""")
+            execute_query(f"INSERT INTO ATLET_NON_KUALIFIKASI VALUES ('{id}');")
+        else:
+            print("Email sudah pernah terdaftar")
+            context = {'message': "Email sudah pernah terdaftar"}
+            return render(request, 'register_atlet.html', context)
     
     context = {'message': ""}
     return render(request, "register_atlet.html",context)
