@@ -35,18 +35,32 @@ def pertanyaan_kualifikasi(request, tahun, batch, tempat, tanggal):
                 query = f"INSERT INTO atlet_nonkualifikasi_ujian_kualifikasi VALUES ('{id}', '{tahun}', '{batch}', '{tempat}', '{tanggal}', false);"
             error, result = try_except_query(query)
             if error:
+                msg = 'Gagal menginput data'
                 print(result)
-                return render(request, 'pertanyaan_kualifikasi.html', {'msg': 'Gagal menginput data'})
+                if 'is not present in table "atlet_non_kualifikasi"' in str(result):
+                    msg = 'Anda sudah terkualifikasi sehingga tidak bisa mengikuti ujian kualifikasi lagi'
+
+                if 'already exists.' in str(result):
+                    msg = 'Anda sudah pernah mengikuti ujian kualifikasi ini'
+
+                return render(request, 'pertanyaan_kualifikasi.html', {'msg': msg})
             else:
                 return redirect('atlet:show_riwayat_ujian')
             
     return render(request, 'pertanyaan_kualifikasi.html', {'msg': ''})
 
-def daftar_event1(request):
-    return render(request, 'daftar_event1.html')
+def daftar_stadium(request):
+    query = f"select * from stadium;"
+    error, result = try_except_query(query)
+    result = list_tup_to_list_list(result)
+    return render(request, 'daftar_stadium.html', {'list_stadium': result})
 
-def daftar_event2(request):
-    return render(request, 'daftar_event2.html')
+def daftar_event(request, stadium):
+    query = f"SELECT * FROM event WHERE nama_stadium = '{stadium}' AND event.tgl_mulai > CURRENT_DATE;"
+    error, result = try_except_query(query)
+    print(result)
+    result = list_tup_to_list_list(result)
+    return render(request, 'daftar_event.html', {'list_event': result})
 
 def pilih_kategori(request):
     return render(request, 'pilih_kategori.html')

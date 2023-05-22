@@ -57,7 +57,6 @@ def create_ujian(request):
         else:
             return redirect('umpire:daftar_ujian')
             
-    print('tes1')
     return render(request, 'form_buat_ujian_kualifikasi.html', {'msg': ''})
 
 def daftar_ujian(request):
