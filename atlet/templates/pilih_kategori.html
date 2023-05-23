@@ -18,20 +18,28 @@
 		<p><strong>Stadium:</strong> {{ event.2 }}</p>
 		<p><strong>Negara:</strong> {{ event.3 }}</p>
 		<hr>
+		
+		{% if msg != " " or msg is not None or msg != '' %}
+		<div class="alert alert-warning" role="alert">
+			{{ msg }}
+		</div>
+		{% endif %}
+		
 		{% if is_atlet_kualifikasi %}
-		<form method="POST">
-			{% csrf_token %}
-			<table class="table table-bordered table-striped table-hover">
-				<thead class="text-center">
-				<tr>
-					<th>Kategori</th>
-					<th>Partner</th>
-					<th>Kapasitas</th>
-					<th></th>
-				</tr>
-				</thead>
-				<tbody class="text-center">
-				{% for partai in list_partai_kompetisi %}
+		
+		<table class="table table-bordered table-striped table-hover">
+			<thead class="text-center">
+			<tr>
+				<th>Kategori</th>
+				<th>Partner</th>
+				<th>Kapasitas</th>
+				<th></th>
+			</tr>
+			</thead>
+			<tbody class="text-center">
+			{% for partai in list_partai_kompetisi %}
+			<form method="POST">
+				{% csrf_token %}
 				<tr>
 					<td>{{ partai.0 }}</td>
 					<td>
@@ -60,18 +68,24 @@
 					<td>{{ partai.3 }}/{{ event.10 }}</td>
 					
 					<td>
-						<button type="submit" class="btn btn-custom btn-primary" name="join_button">Join</button>
+						{% if partai.3 == event.10 %}
+						<button type="submit" class="btn btn-primary btn-custom" disabled>Pilih</button>
+						{% else %}
+						<button type="submit" class="btn btn-primary btn-custom">Pilih</button>
+						{% endif %}
 					</td>
 				
 				</tr>
-				{% endfor %}
-				</tbody>
-			</table>
-			{% else %}
-			<div class="alert alert-warning" role="alert">
-				<p>Anda Belum Terkualifikasi</p>
-			</div>
-			{% endif %}
+			</form>
+			
+			{% endfor %}
+			</tbody>
+		</table>
+		{% else %}
+		<div class="alert alert-warning" role="alert">
+			<p>Anda Belum Terkualifikasi</p>
+		</div>
+		{% endif %}
 	</div>
 </div>
 
