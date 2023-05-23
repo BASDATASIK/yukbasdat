@@ -18,69 +18,60 @@
 		<p><strong>Stadium:</strong> {{ event.2 }}</p>
 		<p><strong>Negara:</strong> {{ event.3 }}</p>
 		<hr>
-		<table class="table table-bordered table-striped table-hover">
-			<thead class="text-center">
-			<tr>
-				<th>Kategori</th>
-				<th>Partner</th>
-				<th>Kapasitas</th>
-				<th></th>
-			</tr>
-			</thead>
-			<tbody class="text-center">
-			{% for partai in list_partai_kompetisi %}
-			<tr>
-				<td>{{ partai.0 }}</td>
-				<td>
-					{% if partai.0 == 'Tunggal Putra' or partai.0 == 'Tunggal Putri' %}
-					<p>-</p>
-					{% else %}
-					<select class="custom-select">
-						<option selected>Atlet 1</option>
-						<option value="1">Atlet 2</option>
-						<option value="2">Atlet 3</option>
-						<option value="3">Atlet 4</option>
-					</select>
-					{% endif %}
-				</td>
-				<td>{{ event.10 }}</td>
-				<td><button class="btn btn-custom btn-primary">Join</button></td>
-			</tr>
-			{% endfor %}
-
-
-
-			{% comment %} <tr>
-				<td>Tunggal Putra</td>
-				<td>-</td>
-				<td><button class="btn btn-custom btn-primary">Join</button></td>
-			</tr>
-			<tr>
-				<td>Ganda Putra</td>
-				<td>
-					<select class="custom-select">
-						<option selected>Atlet 1</option>
-						<option value="1">Atlet 2</option>
-						<option value="2">Atlet 3</option>
-						<option value="3">Atlet 4</option>
-					</select>
-				</td>
-				<td><button class="btn btn-custom btn-primary">Join</button></td>
-			</tr>
-			<tr>
-				<td>Ganda Campuran</td>
-				<td>
-					<select class="custom-select">
-						<option selected>Atlet 1</option>
-						<option value="1">Atlet 2</option>
-						<option value="2">Atlet 3</option>
-						<option value="3">Atlet 4</option>
-					</select>
-				</td>
-				<td><button class="btn btn-custom btn-primary">Join</button></td>
-			</tr> {% endcomment %}
-			</tbody>
-		</table>
+		{% if is_atlet_kualifikasi %}
+		<form method="POST">
+			{% csrf_token %}
+			<table class="table table-bordered table-striped table-hover">
+				<thead class="text-center">
+				<tr>
+					<th>Kategori</th>
+					<th>Partner</th>
+					<th>Kapasitas</th>
+					<th></th>
+				</tr>
+				</thead>
+				<tbody class="text-center">
+				{% for partai in list_partai_kompetisi %}
+				<tr>
+					<td>{{ partai.0 }}</td>
+					<td>
+						{% if partai.0 == 'Tunggal Putra' or partai.0 == 'Tunggal Putri' %}
+						<p>-</p>
+						{% elif partai.0 == 'Ganda Putra' or partai.0 == 'Ganda Putri' %}
+						<select class="custom-select" name="{{ partai.0 }}">
+							<option style="display:none;" selected>Pilih Atlet</option>
+							{% for atlet in list_atlet_jenis_kelamin %}
+							{% if atlet.18 == 'WS' or atlet.18 == 'MS' %}
+							<option value="{{ atlet.1 }}">{{ atlet.11 }}</option>
+							{% endif %}
+							{% endfor %}
+						</select>
+						{% elif partai.0 == 'Ganda Campuran' %}
+						<select class="custom-select" name="{{ partai.0 }}">
+							<option style="display:none;" selected>Pilih Atlet</option>
+							{% for atlet in list_atlet %}
+							{% if atlet.18 == 'XD' %}
+							<option value="{{ atlet.1 }}">{{ atlet.11 }}</option>
+							{% endif %}
+							{% endfor %}
+						</select>
+						{% endif %}
+					</td>
+					<td>{{ partai.3 }}/{{ event.10 }}</td>
+					
+					<td>
+						<button type="submit" class="btn btn-custom btn-primary" name="join_button">Join</button>
+					</td>
+				
+				</tr>
+				{% endfor %}
+				</tbody>
+			</table>
+			{% else %}
+			<div class="alert alert-warning" role="alert">
+				<p>Anda Belum Terkualifikasi</p>
+			</div>
+			{% endif %}
 	</div>
 </div>
 
