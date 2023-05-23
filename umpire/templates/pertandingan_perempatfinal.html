@@ -71,34 +71,47 @@
 				</tr>
 			</thead>
 			<tbody>
+				{% for nama in list_nama %}
 				<tr>
-					<td>A</td>
-					<td>B</td>
-					<td><button class="btn-minus">&#x2013;</button> 1 <button class="btn-plus">+</button></td>
-					<td><button class="btn-minus">&#x2013;</button> 0 <button class="btn-plus">+</button></td>
+					<td>{{nama.0.0}}</td>
+					<td>{{nama.1.0}}</td>
+					<td>
+						<button class="btn-minus" onclick="decrementValue(this)">&#x2013;</button>
+						<span class="value">1</span>
+						<button class="btn-plus" onclick="incrementValue(this)">+</button>
+					</td>
+					<td>
+						<button class="btn-minus" onclick="decrementValue(this)">&#x2013;</button>
+						<span class="value">0</span>
+						<button class="btn-plus" onclick="incrementValue(this)">+</button>
+					</td>
 				</tr>
-				<tr>
-					<td>C</td>
-					<td>D</td>
-					<td><button class="btn-minus">&#x2013;</button> 1 <button class="btn-plus">+</button></td>
-					<td><button class="btn-minus">&#x2013;</button> 2 <button class="btn-plus">+</button></td>
-				</tr>
-				<tr>
-					<td>E</td>
-					<td>F</td>
-					<td><button class="btn-minus">&#x2013;</button> 2 <button class="btn-plus">+</button></td>
-					<td><button class="btn-minus">&#x2013;</button> 1 <button class="btn-plus">+</button></td>
-				</tr>
-				<tr>
-					<td>G</td>
-					<td>H</td>
-					<td><button class="btn-minus">&#x2013;</button> 2 <button class="btn-plus">+</button></td>
-					<td><button class="btn-minus">&#x2013;</button> 1 <button class="btn-plus">+</button></td>
-				</tr>
+				{% endfor %}
 			</tbody>
 		</table>
 		<br>
 		<button class="btn btn-custom btn-primary">NEXT</button>
 	</div>
 </div>
+
+<script>
+    function incrementValue(button) {
+        var valueElement = button.parentNode.querySelector('.value');
+        var value = parseInt(valueElement.innerHTML);
+        valueElement.innerHTML = value + 1;
+    }
+
+    function decrementValue(button) {
+        var valueElement = button.parentNode.querySelector('.value');
+        var value = parseInt(valueElement.innerHTML);
+        if (value > 0) {
+            valueElement.innerHTML = value - 1;
+        }
+    }
+</script>
+
+
+
+
+
 {% endblock content %}
