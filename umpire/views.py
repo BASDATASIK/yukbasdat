@@ -61,7 +61,24 @@ def daftar_ujian(request):
     return render(request, 'list_ujian_kualifikasi_umpire.html', {'list_ujian': list_ujian})
 
 def pertandingan_perempatfinal(request):
-    return render(request, 'pertandingan_perempatfinal.html')
+    query_pertandingan = '''
+    SELECT 
+        M.nama
+    FROM
+        atlet_kualifikasi AK
+        JOIN member M ON (AK.id_atlet = M.id)
+    '''
+    list_atlet_kualifikasi = list_tup_to_list_list(execute_query(query_pertandingan)) 
+    list_nama = []
+    for i in range(0,len(list_atlet_kualifikasi)-1,2):
+        sublist = [list_atlet_kualifikasi[i], list_atlet_kualifikasi[i+1]]
+        list_nama.append(sublist)
+
+    context = {
+        'list_nama' : list_nama,
+    }
+    print(list_nama)
+    return render(request, 'pertandingan_perempatfinal.html', context)
 
 def pertandingan_perebutan_juara_3(request):
     return render(request, 'pertandingan_perebutan_juara_3.html')
@@ -297,18 +314,5 @@ def hasil_pertandingan(request, jenis_partai:str, nama_event:str, tahun_event:in
     }
     return render(request, 'hasil_pertandingan_umpire.html', context)
 
-def pertandingan(request):
-    query_pertandingan = '''
-    SELECT 
-        M.nama
-    FROM
-        atlet_kualifikasi AK
-        INNER JOIN atlet_kualifikasi AK ON (AK.id_atlet = A.id)
-        LEFT OUTER JOIN point_history PH ON (PH.id_atlet = A.id)
-        INNER JOIN member M ON (A.id = M.id);
-    '''
-    list_atlet_kualifikasi = list_tup_to_list_list(execute_query(query_pertandingan))
-    for row in list_atlet_kualifikasi:
-        row[1] = row[1].strftime("%d %B %Y")
-        row[7] = 'Laki-laki' if (row[7]) else 'Perempuan'
+
 
