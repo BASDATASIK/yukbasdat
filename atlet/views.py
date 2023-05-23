@@ -45,7 +45,7 @@ def pertanyaan_kualifikasi(request, tahun, batch, tempat, tanggal):
 
                 return render(request, 'pertanyaan_kualifikasi.html', {'msg': msg})
             else:
-                return redirect('atlet:show_riwayat_ujian')
+                return redirect('atlet:show_riwayat_ujian') 
             
     return render(request, 'pertanyaan_kualifikasi.html', {'msg': ''})
 
