@@ -4,9 +4,6 @@ from utils.query import *
 from authentication.views import is_authenticated
 
 # Create your views here.
-def form_data_kualifikasi(request):
-    return render(request, 'form_data_kualifikasi.html')
-
 def show_riwayat_ujian(request):
     query = f"SELECT * FROM atlet_nonkualifikasi_ujian_kualifikasi WHERE id_atlet = '{request.session['id']}';"
     error, result = try_except_query(query)

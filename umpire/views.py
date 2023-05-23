@@ -321,6 +321,3 @@ def hasil_pertandingan(request, jenis_partai:str, nama_event:str, tahun_event:in
         'len_perempat':len(perempat_final)
     }
     return render(request, 'hasil_pertandingan_umpire.html', context)
-
-
-

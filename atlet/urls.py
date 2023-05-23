@@ -3,7 +3,6 @@ from atlet.views import *
 
 app_name = 'atlet'
 urlpatterns = [
-    path('form_data_kualifikasi/', form_data_kualifikasi, name='form_data_kualifikasi'),
     path('pertanyaan_kualifikasi/', pertanyaan_kualifikasi, name='pertanyaan_kualifikasi'),
     path('daftar_stadium/', daftar_stadium, name='daftar_stadium'),
     path('daftar_event/<str:stadium>', daftar_event, name='daftar_event'),
