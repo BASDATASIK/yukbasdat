@@ -307,7 +307,7 @@ def pilih_kategori(request, nama_event, tahun):
             else:
                 id_pasangan = atlet_ganda_campuran
                 query = f'update atlet_ganda set id_atlet_kualifikasi_2 = {request.session["id"]} where id_atlet_kualifikasi = {id_pasangan};'
-                error, result = try_except_query(query)
+                error, result = try_except_query(query) 
                 if error:
                     print(error)
                     msg = "Gagal memilih"
