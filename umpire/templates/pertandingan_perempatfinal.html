@@ -73,32 +73,42 @@
 			<tbody>
 				{% for nama in list_nama %}
 				<tr>
-					<td>{{nama.0.0}}</td>
-					<td>{{nama.1.0}}</td>
+					<td>{{nama.0}}</td>
+					<td>{{nama.1}}</td>
 					<td>
-						<button class="btn-minus" onclick="decrementValue(this)">&#x2013;</button>
-						<span class="value">1</span>
-						<button class="btn-plus" onclick="incrementValue(this)">+</button>
+						<button class="btn-minus" value = "{{nama.0}}" onclick="decrementValue(this)">&#x2013;</button>
+						<span class="value">0</span>
+						<button class="btn-plus tim1" id="tim1" value = "{{nama.0}}" onclick="incrementValue(this)">+</button>
 					</td>
 					<td>
-						<button class="btn-minus" onclick="decrementValue(this)">&#x2013;</button>
+						<button class="btn-minus" value = "{{nama.1}}" onclick="decrementValue(this)">&#x2013;</button>
 						<span class="value">0</span>
-						<button class="btn-plus" onclick="incrementValue(this)">+</button>
+						<button class="btn-plus" id="tim2" value = "{{nama.1}}" onclick="incrementValue(this)">+</button>
 					</td>
 				</tr>
 				{% endfor %}
 			</tbody>
 		</table>
 		<br>
-		<a href="/umpire/pertandingan/semifinal" class="btn btn-custom btn-primary">NEXT</a>
+		<form method="POST">
+			{% csrf_token %}
+			<input type="hidden" value="" id="hasil_match" name="hasil_match">
+			<button type="submit" class="btn btn-custom btn-primary">NEXT</a>
+		</form>
 	</div>
 </div>
 
 <script>
+	let dict = {{list_skor|safe}};
     function incrementValue(button) {
         var valueElement = button.parentNode.querySelector('.value');
         var value = parseInt(valueElement.innerHTML);
         valueElement.innerHTML = value + 1;
+		var buttonValue = button.value;
+		dict[buttonValue] = value + 1;
+		console.log(dict[buttonValue])
+		console.log(dict);
+		document.getElementById('hasil_match').value = JSON.stringify(dict)
     }
 
     function decrementValue(button) {
@@ -106,8 +116,14 @@
         var value = parseInt(valueElement.innerHTML);
         if (value > 0) {
             valueElement.innerHTML = value - 1;
+			var buttonValue = button.value;
+			dict[buttonValue] = value - 1;
+			console.log(dict[buttonValue])
+			console.log(dict);
+			document.getElementById('hasil_match').value = JSON.stringify(dict)
         }
     }
+
 </script>
 
 
