@@ -75,6 +75,7 @@ def pertandingan_perempatfinal(request):
     FROM
         atlet_kualifikasi AK
         JOIN member M ON (AK.id_atlet = M.id)
+        JOIN peserta_kompetisi PK ON (PK.id_atlet_kualifikasi = AK.id_atlet)
     '''
     list_atlet_kualifikasi = list_tup_to_list_list(execute_query(query_pertandingan)) 
     list_nama = []
@@ -321,6 +322,3 @@ def hasil_pertandingan(request, jenis_partai:str, nama_event:str, tahun_event:in
         'len_perempat':len(perempat_final)
     }
     return render(request, 'hasil_pertandingan_umpire.html', context)
-
-
-
