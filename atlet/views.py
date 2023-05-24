@@ -100,17 +100,12 @@ def pilih_kategori(request, nama_event, tahun):
     error, list_atlet = try_except_query(query)
     list_atlet = list_tup_to_list_list(list_atlet)
 
+    partai_kompetisi_dict = {'MS': 'Tunggal Putra', 'WS': 'Tunggal Putri', 'MD': 'Ganda Putra', 'WD': 'Ganda Putri',
+                             'XD': 'Ganda Campuran'}
+
     for i in range(len(list_partai_kompetisi)):
-        if list_partai_kompetisi[i][0] == 'MS':
-            list_partai_kompetisi[i][0] = 'Tunggal Putra'
-        elif list_partai_kompetisi[i][0] == 'WS':
-            list_partai_kompetisi[i][0] = 'Tunggal Putri'
-        elif list_partai_kompetisi[i][0] == 'MD':
-            list_partai_kompetisi[i][0] = 'Ganda Putra'
-        elif list_partai_kompetisi[i][0] == 'WD':
-            list_partai_kompetisi[i][0] = 'Ganda Putri'
-        elif list_partai_kompetisi[i][0] == 'XD':
-            list_partai_kompetisi[i][0] = 'Ganda Campuran'
+        if list_partai_kompetisi[i][0] in partai_kompetisi_dict:
+            list_partai_kompetisi[i][0] = partai_kompetisi_dict[list_partai_kompetisi[i][0]]
 
     query = f"SELECT jenis_kelamin FROM atlet WHERE id = '{request.session['id']}';"
     error, jenis_kelamin = try_except_query(query)
@@ -172,6 +167,7 @@ def pilih_kategori(request, nama_event, tahun):
                     msg = "Gagal memilih"
                     context['msg'] = msg
                     return render(request, 'atlet_kualifikasi.html', context)
+                
                 query =  'select max(nomor_peserta) from peserta_kompetisi;'
                 error, max_nomor_peserta = try_except_query(query)
                 max_nomor_peserta = max_nomor_peserta[0][0]
@@ -190,6 +186,7 @@ def pilih_kategori(request, nama_event, tahun):
                     msg = "Gagal memilih"
                     context['msg'] = msg
                     return render(request, 'atlet_kualifikasi.html', context)
+                
                 query = f"insert into partai_peserta_kompetisi values ('MD', '{nama_event}', '{tahun}', '{max_nomor_peserta}');"
                 error, result = try_except_query(query)
                 if error:
@@ -197,6 +194,15 @@ def pilih_kategori(request, nama_event, tahun):
                     msg = "Gagal memilih"
                     context['msg'] = msg
                     return render(request, 'atlet_kualifikasi.html', context)
+                
+                query = f"insert into peserta_mendaftar_event values ('{max_nomor_peserta}', '{nama_event}', '{tahun}');"
+                error, result = try_except_query(query)
+                if error:
+                    print(error)
+                    msg = "Gagal memilih"
+                    context['msg'] = msg
+                    return render(request, 'atlet_kualifikasi.html', context)
+
                 msg = "Berhasil memilih"
                 context['msg'] = msg
                 return render(request, 'atlet_kualifikasi.html', context)
@@ -227,6 +233,7 @@ def pilih_kategori(request, nama_event, tahun):
                 query =  'select max(nomor_peserta) from peserta_kompetisi;'
                 error, max_nomor_peserta = try_except_query(query)
                 max_nomor_peserta = max_nomor_peserta[0][0]
+
                 if max_nomor_peserta is None:
                     max_nomor_peserta = 0
                 max_nomor_peserta += 1
@@ -249,6 +256,15 @@ def pilih_kategori(request, nama_event, tahun):
                     msg = "Gagal memilih"
                     context['msg'] = msg
                     return render(request, 'atlet_kualifikasi.html', context)
+                
+                query = f"insert into peserta_mendaftar_event values ('{max_nomor_peserta}', '{nama_event}', '{tahun}');"
+                error, result = try_except_query(query)
+                if error:
+                    print(error)
+                    msg = "Gagal memilih"
+                    context['msg'] = msg
+                    return render(request, 'atlet_kualifikasi.html', context)
+
                 msg = "Berhasil memilih"
                 context['msg'] = msg
                 return render(request, 'atlet_kualifikasi.html', context)
@@ -301,6 +317,15 @@ def pilih_kategori(request, nama_event, tahun):
                     msg = "Gagal memilih"
                     context['msg'] = msg
                     return render(request, 'atlet_kualifikasi.html', context)
+                
+                query = f"insert into peserta_mendaftar_event values ('{max_nomor_peserta}', '{nama_event}', '{tahun}');"
+                error, result = try_except_query(query)
+                if error:
+                    print(error)
+                    msg = "Gagal memilih"
+                    context['msg'] = msg
+                    return render(request, 'atlet_kualifikasi.html', context)
+                
                 msg = "Berhasil memilih"
                 context['msg'] = msg
                 return render(request, 'atlet_kualifikasi.html', context)
@@ -356,6 +381,17 @@ def pilih_kategori(request, nama_event, tahun):
                         msg = 'Anda sudah terdaftar pada kompetisi ini'
                     context['msg'] = msg
                     return render(request, 'pilih_kategori.html', context)
+                
+                query = f"insert into peserta_mendaftar_event values ('{max_nomor_peserta}', '{nama_event}', '{tahun}');"
+                error, result = try_except_query(query)
+                if error:
+                    print(result)
+                    msg = 'Gagal mendaftar kompetisi'
+                    if 'already exists.' in str(result):
+                        msg = 'Anda sudah terdaftar pada kompetisi ini'
+                    context['msg'] = msg
+                    return render(request, 'pilih_kategori.html', context)
+
                 msg = 'Berhasil mendaftar kompetisi'
                 context['msg'] = msg
                 return render(request, 'pilih_kategori.html', context)
