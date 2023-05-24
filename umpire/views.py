@@ -198,7 +198,7 @@ def partai_kompetisi_event(request):
     for row in list_partai_kompetisi_event:
         row[5] = row[5].strftime("%d %B %Y")
         row[6] = row[6].strftime("%d %B %Y")
-        row[8] = False if (row[7] < 8) else True
+        row[8] = False if (row[7] < 8) else True    # jika max ambil dari stadium maka terlalu banyak
         row[7] = f"{row[7]}/8"
 
     context = {

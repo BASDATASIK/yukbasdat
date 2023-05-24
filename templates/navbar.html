@@ -67,7 +67,7 @@
 						Atlet
 					</a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-						<a class="dropdown-item" href="#">Daftar Atlet</a>
+						<a class="dropdown-item" href="{% url 'umpire:daftar_atlet' %}">Daftar Atlet</a>
 					</div>
 				</li>
 				<li class="nav-item dropdown">
@@ -85,7 +85,7 @@
 						Event
 					</a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-						<a class="dropdown-item" href="#">List Partai Kompetisi</a>
+						<a class="dropdown-item" href="{% url 'umpire:partai_kompetisi_event' %}">List Partai Kompetisi</a>
 					</div>
 				</li>
 				{% endif %}

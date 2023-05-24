@@ -25,9 +25,8 @@ def login(request):
         nama = request.POST.get('name')
         error, result = try_except_query(f"""SELECT id FROM MEMBER WHERE nama='{nama}' and email = '{email}'""") 
         
-        if error:
-            # TODO: implement error handling
-            ...
+        if result == []:
+            return render(request, 'login.html', context={'errorMsg':'Maaf data tidak ada dalam database'})
         else:
             getId = result
         

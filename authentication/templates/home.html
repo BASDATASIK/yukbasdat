@@ -9,6 +9,11 @@
 <div class="content-container d-flex align-items-center justify-content-center mx-auto">
 	<div class="container">
 		<h2><strong>BABADU - 5</strong></h2>
+		{% if errorMsg %}
+			<div class="alert alert-danger" role="alert" id="center">
+				{{ errorMsg }}
+			</div>
+		{% endif %}
 		<div class="row">
 			<div class="col">
 				<a href="/login" class="btn btn-primary btn-custom btn-block">Login</a>
