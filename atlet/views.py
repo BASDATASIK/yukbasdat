@@ -391,7 +391,7 @@ def pilih_kategori(request, nama_event, tahun):
                 msg = 'Berhasil mendaftar kompetisi'
                 context['msg'] = msg
                 return render(request, 'pilih_kategori.html', context)
-
+ 
     return render(request, 'pilih_kategori.html', context)
 
 def unenrolled_event(request):
