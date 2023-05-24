@@ -21,8 +21,9 @@
 						Latih Atlet
 					</a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-						<a class="dropdown-item" href="#">Create Latih Atlet</a>
-						<a class="dropdown-item" href="#">List Atlet Dilatih</a>
+						<a class="dropdown-item" href="{% url 'pelatih:home_latih_atlet' %}">Home Latih Atlet</a>
+						<a class="dropdown-item" href="{% url 'pelatih:form_latih_atlet' %}">Form Latih Atlet</a>
+						<a class="dropdown-item" href="{% url 'pelatih:list_latih_atlet' %}">List Atlet Dilatih</a>
 					</div>
 				</li>
 				{% elif "/atlet/" in request.path %}

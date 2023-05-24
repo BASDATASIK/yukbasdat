@@ -6,6 +6,10 @@ import uuid
 
 # Create your views here.
 def home(request):
+    if (request.session.get("unauthorized") is not None):   
+        temp = request.session.get("unauthorized")
+        del request.session["unauthorized"]
+        return render(request, 'home.html',context={'errorMsg':temp})
     return render(request, 'home.html')
 
 def login(request):
