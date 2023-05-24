@@ -29,6 +29,7 @@ def show_riwayat_ujian(request):
 def pertandingan_semifinal(request):
     value = request.COOKIES.get('peserta_menang')
     res = value.strip("]['").split("', '")
+    print(res)
     list_skor = {}
     list_nama = []
     for i in range(0,len(res)):
@@ -40,10 +41,61 @@ def pertandingan_semifinal(request):
         'list_nama' : list_nama,
         'list_skor' : list_skor,
         }
+
+    if request.method == "POST":
+        hasil = request.POST['hasil_match']
+        hasil_dict = ast.literal_eval(hasil)
+        list_menang = []
+        list_kalah = []
+        print(hasil_dict)
+        for i in list_nama:
+            if (hasil_dict[i[0]]>=20 and hasil_dict[i[1]]>=20 and hasil_dict[i[0]]==hasil_dict[i[1]]+2):
+                list_menang.append(i[0])
+                list_kalah.append(i[1])
+            elif (hasil_dict[i[0]]>=20 and hasil_dict[i[1]]>=20 and hasil_dict[i[1]]==hasil_dict[i[0]]+2):
+                list_kalah.append(i[1])
+                list_menang.append(i[0])
+            elif(hasil_dict[i[0]] == 21):
+                list_kalah.append(i[1])
+                list_menang.append(i[0])
+            elif(hasil_dict[i[1]] == 21):
+                list_kalah.append(i[0])
+                list_menang.append(i[1])
+        res = HttpResponseRedirect(reverse('umpire:pertandingan_final'))
+        res.set_cookie('peserta_menang_semifinal', list_menang)
+        res.set_cookie('peserta_kalah_semifinal', list_kalah)
+        return res
     return render(request, 'pertandingan_semifinal.html', context)
 
 def pertandingan_final(request):
-    return render(request, 'pertandingan_final.html')
+    value = request.COOKIES.get('peserta_menang_semifinal')
+    res = value.strip("]['").split("', '")
+    list_skor_menang = {}
+    list_nama_menang = []
+    for i in range(0,len(res)):
+        list_skor_menang.update({res[i] : 0})
+    for i in range(0,len(res),2):
+        sublist = [res[i], res[i+1]]
+        list_nama_menang.append(sublist)
+    
+    value = request.COOKIES.get('peserta_kalah_semifinal')
+    res = value.strip("]['").split("', '")
+    list_skor_kalah = {}
+    list_nama_kalah = []
+    for i in range(0,len(res)):
+        list_skor_kalah.update({res[i] : 0})
+    for i in range(0,len(res),2):
+        sublist = [res[i], res[i+1]]
+        list_nama_kalah.append(sublist)
+
+    context = {
+        'list_nama_menang' : list_nama_menang,
+        'list_skor_menang' : list_skor_menang,
+        'list_nama_kalah' : list_nama_kalah,
+        'list_skor_kalah' : list_skor_kalah,
+        }
+    
+    return render(request, 'pertandingan_final.html', context)
 
 def data_perolehan_poin(request):
     return render(request, 'data_perolehan_poin.html')
@@ -86,9 +138,51 @@ def daftar_ujian(request):
 
 def pertandingan_perempatfinal(request):
     query_pertandingan = '''
-    select distinct M.nama as nama_peserta from partai_peserta_kompetisi PPK join peserta_kompetisi PK on PPK.nomor_peserta = PK.nomor_peserta join atlet_kualifikasi AK on (PK.id_atlet_kualifikasi = AK.id_atlet) join atlet A on (AK.id_atlet = A.id) join member M on (A.id = M.id) where jenis_partai LIKE '%S' LIMIT 4;
+SELECT DISTINCT
+    CASE
+        WHEN jenis_partai LIKE '%D' THEN CONCAT(M.nama, ' & ', M2.nama)
+        WHEN jenis_partai LIKE '%S' THEN M.nama
+    END AS nama_peserta
+FROM
+    partai_peserta_kompetisi PPK
+    JOIN peserta_kompetisi PK ON PPK.nomor_peserta = PK.nomor_peserta
+    JOIN atlet_ganda AG ON PK.id_atlet_ganda = AG.id_atlet_ganda
+    JOIN atlet_kualifikasi AK ON AG.id_atlet_kualifikasi = AK.id_atlet
+    JOIN atlet_kualifikasi AK2 ON AG.id_atlet_kualifikasi_2 = AK2.id_atlet
+    JOIN atlet A ON AK.id_atlet = A.id
+    JOIN atlet A2 ON AK2.id_atlet = A2.id
+    JOIN member M ON A.id = M.id
+    JOIN member M2 ON A2.id = M2.id
+WHERE
+    jenis_partai LIKE '%D' OR jenis_partai LIKE '%S'
+LIMIT 8;    
+'''
+    query_atlet_ganda = '''
+    select distinct concat(M.nama, ' & ', M2.nama) as nama_peserta 
+    from partai_peserta_kompetisi PPK 
+    join peserta_kompetisi PK on PPK.nomor_peserta = PK.nomor_peserta 
+    join atlet_ganda AG on (PK.id_atlet_ganda = AG.id_atlet_ganda) 
+    join atlet_kualifikasi AK on (AG.id_atlet_kualifikasi = AK.id_atlet) 
+    join atlet_kualifikasi AK2 on (AG.id_atlet_kualifikasi_2 = AK2.id_atlet) 
+    join atlet A on (AK.id_atlet = A.id) join atlet A2 on (AK2.id_atlet = A2.id) 
+    join member M on (A.id = M.id) 
+    join member M2 on (A2.id = M2.id) 
+    where jenis_partai LIKE '%D' LIMIT 4;
     '''
-    list_atlet_kualifikasi = list_tup_to_list_list(execute_query(query_pertandingan))
+
+    query_atlet_single = '''
+    select distinct M.nama as nama_peserta 
+    from partai_peserta_kompetisi PPK 
+    join peserta_kompetisi PK on PPK.nomor_peserta = PK.nomor_peserta 
+    join atlet_kualifikasi AK on (PK.id_atlet_kualifikasi = AK.id_atlet) 
+    join atlet A on (AK.id_atlet = A.id) join member M on (A.id = M.id) 
+    where jenis_partai LIKE '%S' LIMIT 4;
+    '''
+
+    #list_atlet_kualifikasi = list_tup_to_list_list(execute_query(query_pertandingan))
+    list_atlet_ganda = list_tup_to_list_list(execute_query(query_atlet_ganda))
+    list_atlet_single = list_tup_to_list_list(execute_query(query_atlet_single))
+    list_atlet_kualifikasi = list_atlet_ganda + list_atlet_single
     list_skor = {}
     list_nama = []
     for i in range(0,len(list_atlet_kualifikasi)):
@@ -118,8 +212,6 @@ def pertandingan_perempatfinal(request):
         return res
     return render(request, 'pertandingan_perempatfinal.html', context)
 
-def pertandingan_perebutan_juara_3(request):
-    return render(request, 'pertandingan_perebutan_juara_3.html')
 
 def daftar_atlet(request):
     query_atlet_kualifikasi = '''
