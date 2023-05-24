@@ -1,6 +1,9 @@
 from django.shortcuts import render
 from django.shortcuts import redirect
 from utils.query import *
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+import ast
 
 # Create your views here.
 def show_event(request):
@@ -24,7 +27,20 @@ def show_riwayat_ujian(request):
     return render(request, 'riwayat_ujian_umpire.html', {'riwayat_ujian': result})
 
 def pertandingan_semifinal(request):
-    return render(request, 'pertandingan_semifinal.html')
+    value = request.COOKIES.get('peserta_menang')
+    res = value.strip("]['").split("', '")
+    list_skor = {}
+    list_nama = []
+    for i in range(0,len(res)):
+        list_skor.update({res[i] : 0})
+    for i in range(0,len(res),2):
+        sublist = [res[i], res[i+1]]
+        list_nama.append(sublist)
+    context = {
+        'list_nama' : list_nama,
+        'list_skor' : list_skor,
+        }
+    return render(request, 'pertandingan_semifinal.html', context)
 
 def pertandingan_final(request):
     return render(request, 'pertandingan_final.html')
@@ -70,23 +86,36 @@ def daftar_ujian(request):
 
 def pertandingan_perempatfinal(request):
     query_pertandingan = '''
-    SELECT 
-        M.nama
-    FROM
-        atlet_kualifikasi AK
-        JOIN member M ON (AK.id_atlet = M.id)
-        JOIN peserta_kompetisi PK ON (PK.id_atlet_kualifikasi = AK.id_atlet)
+    select distinct M.nama as nama_peserta from partai_peserta_kompetisi PPK join peserta_kompetisi PK on PPK.nomor_peserta = PK.nomor_peserta join atlet_kualifikasi AK on (PK.id_atlet_kualifikasi = AK.id_atlet) join atlet A on (AK.id_atlet = A.id) join member M on (A.id = M.id) where jenis_partai LIKE '%S' LIMIT 4;
     '''
-    list_atlet_kualifikasi = list_tup_to_list_list(execute_query(query_pertandingan)) 
+    list_atlet_kualifikasi = list_tup_to_list_list(execute_query(query_pertandingan))
+    list_skor = {}
     list_nama = []
-    for i in range(0,len(list_atlet_kualifikasi)-1,2):
-        sublist = [list_atlet_kualifikasi[i], list_atlet_kualifikasi[i+1]]
+    for i in range(0,len(list_atlet_kualifikasi)):
+        list_skor.update({list_atlet_kualifikasi[i][0] : 0})
+    for i in range(0,len(list_atlet_kualifikasi),2):
+        sublist = [list_atlet_kualifikasi[i][0], list_atlet_kualifikasi[i+1][0]]
         list_nama.append(sublist)
-
     context = {
         'list_nama' : list_nama,
+        'list_skor' : list_skor,
     }
-    print(list_nama)
+    if request.method == "POST":
+        hasil = request.POST['hasil_match']
+        hasil_dict = ast.literal_eval(hasil)
+        list_menang = []
+        for i in list_nama:
+            if (hasil_dict[i[0]]>=20 and hasil_dict[i[1]]>=20 and hasil_dict[i[0]]==hasil_dict[i[1]]+2):
+                list_menang.append(i[0])
+            elif (hasil_dict[i[0]]>=20 and hasil_dict[i[1]]>=20 and hasil_dict[i[1]]==hasil_dict[i[0]]+2):
+                list_menang.append(i[1])
+            elif(hasil_dict[i[0]] == 21):
+                list_menang.append(i[0])
+            elif(hasil_dict[i[1]] == 21):
+                list_menang.append(i[1])
+        res = HttpResponseRedirect(reverse('umpire:pertandingan_semifinal'))
+        res.set_cookie('peserta_menang', list_menang)
+        return res
     return render(request, 'pertandingan_perempatfinal.html', context)
 
 def pertandingan_perebutan_juara_3(request):
