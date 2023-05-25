@@ -44,6 +44,9 @@ def pertandingan_semifinal(request):
 
     if request.method == "POST":
         hasil = request.POST['hasil_match']
+        durasi = request.POST['durasi']
+        print(durasi)
+
         hasil_dict = ast.literal_eval(hasil)
         list_menang = []
         list_kalah = []
@@ -70,31 +73,38 @@ def pertandingan_semifinal(request):
 def pertandingan_final(request):
     value = request.COOKIES.get('peserta_menang_semifinal')
     res = value.strip("]['").split("', '")
-    list_skor_menang = {}
+    list_skor = {}
     list_nama_menang = []
     for i in range(0,len(res)):
-        list_skor_menang.update({res[i] : 0})
+        list_skor.update({res[i] : 0})
     for i in range(0,len(res),2):
         sublist = [res[i], res[i+1]]
         list_nama_menang.append(sublist)
     
     value = request.COOKIES.get('peserta_kalah_semifinal')
     res = value.strip("]['").split("', '")
-    list_skor_kalah = {}
     list_nama_kalah = []
     for i in range(0,len(res)):
-        list_skor_kalah.update({res[i] : 0})
+        list_skor.update({res[i] : 0})
     for i in range(0,len(res),2):
         sublist = [res[i], res[i+1]]
         list_nama_kalah.append(sublist)
 
     context = {
         'list_nama_menang' : list_nama_menang,
-        'list_skor_menang' : list_skor_menang,
+        'list_skor' : list_skor,
         'list_nama_kalah' : list_nama_kalah,
-        'list_skor_kalah' : list_skor_kalah,
         }
     
+    if request.method == "POST":
+        durasi = request.POST['durasi']
+        durasi1 = request.POST['durasi1']
+        print(durasi)
+        print(durasi1)
+
+        res = HttpResponseRedirect(reverse('umpire:data_hasil_pertandingan'))
+        return res
+
     return render(request, 'pertandingan_final.html', context)
 
 def data_perolehan_poin(request):
@@ -196,6 +206,8 @@ LIMIT 8;
     }
     if request.method == "POST":
         hasil = request.POST['hasil_match']
+        durasi = request.POST['durasi']
+        print(durasi)
         hasil_dict = ast.literal_eval(hasil)
         list_menang = []
         for i in list_nama:
