@@ -407,7 +407,7 @@ def dashboard(request):
     id_atlet = request.session.get("id")
     query_dashboard = f'''
     SELECT 
-        m.nama, a.negara_asal, m.email, a.tgl_lahir, A.play_right, A.height, STRING_AGG(MP.nama, ', '), 
+        m.nama, a.negara_asal, m.email, a.tgl_lahir, A.play_right, A.height, STRING_AGG(DISTINCT MP.nama, ', '), 
         CASE
             WHEN ANK.id_atlet IS NOT NULL THEN 'Non Kualifikasi'
             WHEN AK.id_atlet IS NOT NULL THEN 'Kualifikasi'
