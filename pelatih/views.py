@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 
 from pelatih.forms import PendaftaranAtlet
+from utils.auth_util_validation import throw_to_home_if_unauthorized
 from utils.query import *
 
 # Create your views here.
@@ -13,13 +14,19 @@ def list_atlet(request):
 def list_atlet(request):
     return render(request, 'list_atlet.html')
 
-# Parameter id_pelatih hanya sementara, harusnya diambil dari session
-def home_latih_atlet(request, id_pelatih):
+def home_latih_atlet(request):
+    if throw_to_home_if_unauthorized(request, "pelatih"):
+        return redirect("/")
+    id_pelatih = request.session.get("id")
     return render(request, 'home_latih_atlet.html', context={'id_pelatih':id_pelatih})
 
-def form_latih_atlet(request, id_pelatih):
+def form_latih_atlet(request):
+    if throw_to_home_if_unauthorized(request, "pelatih"):
+        return redirect("/")
+    id_pelatih = request.session.get("id")
+    ################################
     ###### INITIALIZE TRIGGER ######
-    ############################################
+    ################################
     query_create_function_1 = '''
     CREATE FUNCTION IS_TRAINED() RETURNS trigger AS
     $$
@@ -53,18 +60,12 @@ def form_latih_atlet(request, id_pelatih):
     $$
     DECLARE
         count_pelatih INTEGER;
-        remove_id_pelatih UUID;
     BEGIN 
         SELECT COUNT(DISTINCT AP.id_pelatih) INTO count_pelatih
         FROM atlet_pelatih AP 
         WHERE (AP.id_atlet = NEW.id_atlet);
         
         IF (count_pelatih >= 2) THEN
-            SELECT AP.id_pelatih INTO remove_id_pelatih
-            FROM atlet_pelatih AP 
-            WHERE (AP.id_atlet = NEW.id_atlet)
-            LIMIT 1;
-
             RAISE EXCEPTION 'Atlet sudah dilatih 2 pelatih. Removing salah satu ... -> SUCCESS';
         END IF;
         
@@ -130,7 +131,10 @@ def form_latih_atlet(request, id_pelatih):
     }
     return render(request, 'form_latih_atlet_pelatih.html', context)
 
-def list_latih_atlet(request, id_pelatih):
+def list_latih_atlet(request):
+    if throw_to_home_if_unauthorized(request, "pelatih"):
+        return redirect("/")
+    id_pelatih = request.session.get("id")
     query_list_latih = f'''
     SELECT 
         MA.nama, MA.email, A.world_rank

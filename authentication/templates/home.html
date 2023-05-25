@@ -8,6 +8,11 @@
 {% block content %}
 <div class="content-container d-flex align-items-center justify-content-center mx-auto">
 	<div class="container">
+		{% if errorMsg %}
+			<div class="alert alert-danger" role="alert" id="center">
+				{{ errorMsg }}
+			</div>
+		{% endif %}
 		<h2><strong>BABADU - 5</strong></h2>
 		<div class="row">
 			<div class="col">

@@ -21,8 +21,9 @@
 						Latih Atlet
 					</a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-						<a class="dropdown-item" href="#">Create Latih Atlet</a>
-						<a class="dropdown-item" href="#">List Atlet Dilatih</a>
+						<a class="dropdown-item" href="{% url 'pelatih:home_latih_atlet' %}">Home Latih Atlet</a>
+						<a class="dropdown-item" href="{% url 'pelatih:form_latih_atlet' %}">Form Latih Atlet</a>
+						<a class="dropdown-item" href="{% url 'pelatih:list_latih_atlet' %}">List Atlet Dilatih</a>
 					</div>
 				</li>
 				{% elif "/atlet/" in request.path %}
@@ -44,7 +45,7 @@
 						Event
 					</a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-						<a class="dropdown-item" href="#">Daftar Event</a>
+						<a class="dropdown-item" href="{% url 'atlet:daftar_stadium' %}">Daftar Event</a>
 						<a class="dropdown-item" href="#">Enrolled Event</a>
 					</div>
 				</li>
@@ -67,7 +68,7 @@
 						Atlet
 					</a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-						<a class="dropdown-item" href="#">Daftar Atlet</a>
+						<a class="dropdown-item" href="{% url 'umpire:daftar_atlet' %}">Daftar Atlet</a>
 					</div>
 				</li>
 				<li class="nav-item dropdown">
@@ -85,7 +86,7 @@
 						Event
 					</a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-						<a class="dropdown-item" href="#">List Partai Kompetisi</a>
+						<a class="dropdown-item" href="{% url 'umpire:partai_kompetisi_event' %}">List Partai Kompetisi</a>
 					</div>
 				</li>
 				{% endif %}

@@ -32,36 +32,7 @@
         <table class="table table-bordered table-striped table-hover">
 			<thead>
 				<tr>
-					<h1 id="timer">00:00</h1>
-
-					<script>
-						var totalSeconds = 0;
-						var timerElement = document.getElementById("timer");
-
-						function updateTimer() {
-						// Menghitung jumlah jam, menit, dan detik
-						var hours = Math.floor(totalSeconds / 3600);
-						var minutes = Math.floor((totalSeconds % 3600) / 60);
-						var seconds = totalSeconds % 60;
-
-						// Format waktu menjadi "MM:SS"
-						var formattedTime = padNumber(minutes) + ":" + padNumber(seconds);
-
-						// Memperbarui elemen dengan ID 'timer'
-						timerElement.textContent = formattedTime;
-
-						// Menambahkan 1 detik ke totalSeconds
-						totalSeconds++;
-						}
-
-						// Memanggil updateTimer setiap detik (1000ms)
-						setInterval(updateTimer, 1000);
-
-						// Fungsi untuk memformat angka menjadi dua digit dengan menambahkan leading zero
-						function padNumber(number) {
-						return number.toString().padStart(2, "0");
-						}
-					</script>
+					<h1 id="timer">00:00</h1>				
 				</tr>
 				<tr>
 					<th>Tim 1</th>
@@ -71,34 +42,96 @@
 				</tr>
 			</thead>
 			<tbody>
+				{% for nama in list_nama %}
 				<tr>
-					<td>A</td>
-					<td>B</td>
-					<td><button class="btn-minus">&#x2013;</button> 1 <button class="btn-plus">+</button></td>
-					<td><button class="btn-minus">&#x2013;</button> 0 <button class="btn-plus">+</button></td>
+					<td>{{nama.0}}</td>
+					<td>{{nama.1}}</td>
+					<td>
+						<button class="btn-minus" value = "{{nama.0}}" onclick="decrementValue(this)">&#x2013;</button>
+						<span class="value">0</span>
+						<button class="btn-plus tim1" id="tim1" value = "{{nama.0}}" onclick="incrementValue(this)">+</button>
+					</td>
+					<td>
+						<button class="btn-minus" value = "{{nama.1}}" onclick="decrementValue(this)">&#x2013;</button>
+						<span class="value">0</span>
+						<button class="btn-plus" id="tim2" value = "{{nama.1}}" onclick="incrementValue(this)">+</button>
+					</td>
 				</tr>
-				<tr>
-					<td>C</td>
-					<td>D</td>
-					<td><button class="btn-minus">&#x2013;</button> 1 <button class="btn-plus">+</button></td>
-					<td><button class="btn-minus">&#x2013;</button> 2 <button class="btn-plus">+</button></td>
-				</tr>
-				<tr>
-					<td>E</td>
-					<td>F</td>
-					<td><button class="btn-minus">&#x2013;</button> 2 <button class="btn-plus">+</button></td>
-					<td><button class="btn-minus">&#x2013;</button> 1 <button class="btn-plus">+</button></td>
-				</tr>
-				<tr>
-					<td>G</td>
-					<td>H</td>
-					<td><button class="btn-minus">&#x2013;</button> 2 <button class="btn-plus">+</button></td>
-					<td><button class="btn-minus">&#x2013;</button> 1 <button class="btn-plus">+</button></td>
-				</tr>
+				{% endfor %}
 			</tbody>
 		</table>
 		<br>
-		<button class="btn btn-custom btn-primary">NEXT</button>
+		<form method="POST">
+			{% csrf_token %}
+			<div>
+				<input type="hidden" value="" id="durasi" name="durasi">
+				<input type="hidden" value="" id="hasil_match" name="hasil_match">
+			</div>
+			<button type="submit" class="btn btn-custom btn-primary">NEXT</a>
+		</form>
+		<script>
+			var totalSeconds = 0;
+			var timerElement = document.getElementById("timer");
+
+			function updateTimer() {
+			// Menghitung jumlah jam, menit, dan detik
+			var hours = Math.floor(totalSeconds / 3600);
+			var minutes = Math.floor((totalSeconds % 3600) / 60);
+			var seconds = totalSeconds % 60;
+
+			// Format waktu menjadi "MM:SS"
+			var formattedTime = padNumber(minutes) + ":" + padNumber(seconds);
+
+			// Memperbarui elemen dengan ID 'timer'
+			timerElement.textContent = formattedTime;
+			document.getElementById("durasi").value = formattedTime;
+
+
+			// Menambahkan 1 detik ke totalSeconds
+			totalSeconds++;
+			}
+
+			// Memanggil updateTimer setiap detik (1000ms)
+			setInterval(updateTimer, 1000);
+
+			// Fungsi untuk memformat angka menjadi dua digit dengan menambahkan leading zero
+			function padNumber(number) {
+			return number.toString().padStart(2, "0");
+			}
+		</script>
 	</div>
 </div>
+
+<script>
+	let dict = {{list_skor|safe}};
+    function incrementValue(button) {
+        var valueElement = button.parentNode.querySelector('.value');
+        var value = parseInt(valueElement.innerHTML);
+        valueElement.innerHTML = value + 1;
+		var buttonValue = button.value;
+		dict[buttonValue] = value + 1;
+		console.log(dict[buttonValue])
+		console.log(dict);
+		document.getElementById('hasil_match').value = JSON.stringify(dict)
+    }
+
+    function decrementValue(button) {
+        var valueElement = button.parentNode.querySelector('.value');
+        var value = parseInt(valueElement.innerHTML);
+        if (value > 0) {
+            valueElement.innerHTML = value - 1;
+			var buttonValue = button.value;
+			dict[buttonValue] = value - 1;
+			console.log(dict[buttonValue])
+			console.log(dict);
+			document.getElementById('hasil_match').value = JSON.stringify(dict)
+        }
+    }
+
+</script>
+
+
+
+
+
 {% endblock content %}
