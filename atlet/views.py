@@ -422,7 +422,7 @@ def dashboard(request):
     FROM 
         atlet A 
         INNER JOIN member M ON (A.id = m.id)
-        INNER JOIN atlet_pelatih AP ON (AP.id_atlet = A.id)
+        LEFT OUTER JOIN atlet_pelatih AP ON (AP.id_atlet = A.id)
         INNER JOIN pelatih P ON (AP.id_pelatih = P.id)
         INNER JOIN member MP ON (P.id = MP.id)
         LEFT OUTER JOIN atlet_non_kualifikasi ANK ON (A.id = ANK.id_atlet)
