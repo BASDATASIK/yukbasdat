@@ -37,6 +37,15 @@ def pertandingan_semifinal(request):
     for i in range(0,len(res),2):
         sublist = [res[i], res[i+1]]
         list_nama.append(sublist)
+
+    list_nama_kalah = []
+    for i in range(0,len(res)):
+        list_skor.update({res[i] : 0})
+    for i in range(0,len(res),2):
+        sublist = [res[i], res[i+1]]
+        list_nama_kalah.append(sublist)
+    print(list_nama_kalah)
+
     context = {
         'list_nama' : list_nama,
         'list_skor' : list_skor,
@@ -64,6 +73,8 @@ def pertandingan_semifinal(request):
             elif(hasil_dict[i[1]] == 21):
                 list_kalah.append(i[0])
                 list_menang.append(i[1])
+
+        print(list_kalah)
         res = HttpResponseRedirect(reverse('umpire:pertandingan_final'))
         res.set_cookie('peserta_menang_semifinal', list_menang)
         res.set_cookie('peserta_kalah_semifinal', list_kalah)
@@ -210,15 +221,22 @@ LIMIT 8;
         print(durasi)
         hasil_dict = ast.literal_eval(hasil)
         list_menang = []
+        list_kalah = []
         for i in list_nama:
             if (hasil_dict[i[0]]>=20 and hasil_dict[i[1]]>=20 and hasil_dict[i[0]]==hasil_dict[i[1]]+2):
                 list_menang.append(i[0])
+                list_kalah.append(i[1])
             elif (hasil_dict[i[0]]>=20 and hasil_dict[i[1]]>=20 and hasil_dict[i[1]]==hasil_dict[i[0]]+2):
+                list_kalah.append(i[0])
                 list_menang.append(i[1])
             elif(hasil_dict[i[0]] == 21):
+                list_kalah.append(i[1])
                 list_menang.append(i[0])
             elif(hasil_dict[i[1]] == 21):
+                list_kalah.append(i[0])
                 list_menang.append(i[1])
+
+        print(list_kalah)
         res = HttpResponseRedirect(reverse('umpire:pertandingan_semifinal'))
         res.set_cookie('peserta_menang', list_menang)
         return res
