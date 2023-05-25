@@ -50,6 +50,8 @@ def daftar_stadium(request):
     query = f"select * from stadium;"
     error, result = try_except_query(query)
     result = list_tup_to_list_list(result)
+    print(request.session["id"])
+    print(result)
     return render(request, 'daftar_stadium.html', {'list_stadium': result})
 
 def daftar_event(request, stadium):
@@ -57,6 +59,109 @@ def daftar_event(request, stadium):
     error, result = try_except_query(query)
     result = list_tup_to_list_list(result)
     return render(request, 'daftar_event.html', {'list_event': result})
+
+def enrolled_partai_kompetisi_event(request):
+    user = request.session['id']
+    query = f'''
+    SELECT e.Nama_Event, e.Tahun, e.Nama_Stadium, pk.Jenis_Partai, e.Kategori_Superseries, e.Tgl_Mulai, e.Tgl_Selesai
+    FROM EVENT e
+    JOIN PARTAI_KOMPETISI pk ON e.Nama_Event = pk.Nama_Event AND e.Tahun = pk.Tahun_Event
+    JOIN PARTAI_PESERTA_KOMPETISI ppk ON pk.Jenis_Partai = ppk.Jenis_Partai AND pk.Nama_Event = ppk.Nama_Event AND pk.Tahun_Event = ppk.Tahun_Event
+    JOIN PESERTA_KOMPETISI p ON ppk.Nomor_Peserta = p.Nomor_Peserta
+    JOIN ATLET_GANDA ag ON p.ID_Atlet_Ganda = ag.ID_Atlet_Ganda
+    JOIN ATLET_KUALIFIKASI ak ON p.ID_Atlet_Kualifikasi = ak.ID_Atlet
+    JOIN ATLET a ON ak.ID_Atlet = a.ID
+    WHERE a.ID = '{user}'; 
+    '''
+    error, result = try_except_query(query)
+    result = list_tup_to_list_list(result)
+    return render(request, 'enrolled_partai_kompetisi_event.html', {'enrolled_partai_kompetisi_event': result})
+
+def enrolled_event(request):
+    user = request.session['id']
+    query = f'''
+    SELECT e.Nama_Event, e.Tahun, e.Nama_Stadium, e.Kategori_Superseries, e.Tgl_Mulai, e.Tgl_Selesai, 
+    FROM EVENT e
+    JOIN PARTAI_KOMPETISI pk ON e.Nama_Event = pk.Nama_Event AND e.Tahun = pk.Tahun_Event
+    JOIN PARTAI_PESERTA_KOMPETISI ppk ON pk.Jenis_Partai = ppk.Jenis_Partai AND pk.Nama_Event = ppk.Nama_Event AND pk.Tahun_Event = ppk.Tahun_Event
+    JOIN PESERTA_KOMPETISI p ON ppk.Nomor_Peserta = p.Nomor_Peserta
+    JOIN ATLET_GANDA ag ON p.ID_Atlet_Ganda = ag.ID_Atlet_Ganda
+    JOIN ATLET_KUALIFIKASI ak ON p.ID_Atlet_Kualifikasi = ak.ID_Atlet
+    JOIN ATLET a ON ak.ID_Atlet = a.ID
+    WHERE a.ID = '{user}'; 
+    '''
+    error, result = try_except_query(query)
+    result = list_tup_to_list_list(result)
+    return render(request, 'enrolled_event.html', {'enrolled_event': result})
+
+def delete_partai_kompetisi_by_atlet_id(atlet_id):
+    try:
+        # Create a cursor to interact with the database
+        cursor = connection.cursor()
+
+        # Delete data from PARTAI_PESERTA_KOMPETISI table for the specified athlete ID
+        delete_partai_peserta_query = """
+            DELETE FROM PARTAI_PESERTA_KOMPETISI
+            WHERE Nomor_Peserta IN (
+                SELECT Nomor_Peserta
+                FROM PESERTA_KOMPETISI
+                WHERE ID_Atlet_Ganda IN (
+                    SELECT ID_Atlet_Ganda
+                    FROM ATLET_GANDA
+                    WHERE ID_Atlet_Kualifikasi = %s
+                )
+            )
+        """
+        cursor.execute(delete_partai_peserta_query, (atlet_id,))
+
+        # Delete data from PESERTA_KOMPETISI table for the specified athlete ID
+        delete_peserta_kompetisi_query = """
+            DELETE FROM PESERTA_KOMPETISI
+            WHERE ID_Atlet_Ganda IN (
+                SELECT ID_Atlet_Ganda
+                FROM ATLET_GANDA
+                WHERE ID_Atlet_Kualifikasi = %s
+            )
+        """
+        cursor.execute(delete_peserta_kompetisi_query, (atlet_id,))
+
+        # Commit the transaction and close the cursor
+        connection.commit()
+        cursor.close()
+
+    except (Exception, psycopg2.Error) as error:
+        # Handle any potential errors
+        print("Error deleting partai kompetisi data for atlet:", error)
+
+def enrolled_event_delete(request, jenis, nama_event, tahun):
+    user = request.session['id']
+    query = f'''
+    SELECT e.Nama_Event, e.Tahun, e.Nama_Stadium, e.Kategori_Superseries, e.Tgl_Mulai, e.Tgl_Selesai, 
+    FROM EVENT e
+    JOIN PARTAI_KOMPETISI pk ON e.Nama_Event = pk.Nama_Event AND e.Tahun = pk.Tahun_Event
+    JOIN PARTAI_PESERTA_KOMPETISI ppk ON pk.Jenis_Partai = ppk.Jenis_Partai AND pk.Nama_Event = ppk.Nama_Event AND pk.Tahun_Event = ppk.Tahun_Event
+    JOIN PESERTA_KOMPETISI p ON ppk.Nomor_Peserta = p.Nomor_Peserta
+    JOIN ATLET_GANDA ag ON p.ID_Atlet_Ganda = ag.ID_Atlet_Ganda
+    JOIN ATLET_KUALIFIKASI ak ON p.ID_Atlet_Kualifikasi = ak.ID_Atlet
+    JOIN ATLET a ON ak.ID_Atlet = a.ID
+    WHERE a.ID = '{user}'; 
+    '''
+    error, result = try_except_query(query)
+    result = list_tup_to_list_list(result)
+    return render(request, 'enrolled_event.html', {'enrolled_event': result})
+
+def list_sponsor(request):
+    user = request.session['id']
+    query = f'''
+    SELECT SPONSOR.Nama_Brand, ATLET_SPONSOR.Tgl_Mulai, ATLET_SPONSOR.Tgl_Selesai
+    FROM ATLET
+    INNER JOIN ATLET_SPONSOR ON ATLET.ID = ATLET_SPONSOR.ID_Atlet
+    INNER JOIN SPONSOR ON ATLET_SPONSOR.ID_Sponsor = SPONSOR.ID
+    WHERE ATLET.ID = '{user}'
+    '''
+    error, result = try_except_query(query)
+    result = list_tup_to_list_list(result)
+    return render(request, 'list_sponsor.html', {'list_sponsor': result})
 
 def pilih_kategori(request, nama_event, tahun):
     query = f"SELECT jenis_kelamin FROM atlet WHERE id = '{request.session['id']}';"
