@@ -9,6 +9,7 @@ venv.bak/
 
 # Python cache files
 __pycache__/
+*.pyc
 
 # SQLite database
 db.sqlite3

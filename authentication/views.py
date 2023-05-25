@@ -6,6 +6,10 @@ import uuid
 
 # Create your views here.
 def home(request):
+    if (request.session.get("unauthorized") is not None):   
+        temp = request.session.get("unauthorized")
+        del request.session["unauthorized"]
+        return render(request, 'home.html',context={'errorMsg':temp})
     return render(request, 'home.html')
 
 def login(request):
@@ -25,9 +29,8 @@ def login(request):
         nama = request.POST.get('name')
         error, result = try_except_query(f"""SELECT id FROM MEMBER WHERE nama='{nama}' and email = '{email}'""") 
         
-        if error:
-            # TODO: implement error handling
-            ...
+        if result == []:
+            return render(request, 'login.html', context={'errorMsg':'Maaf data tidak ada dalam database'})
         else:
             getId = result
         

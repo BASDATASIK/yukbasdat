@@ -32,36 +32,7 @@
         <table class="table table-bordered table-striped table-hover">
 			<thead>
 				<tr>
-					<h1 id="timer">00:00</h1>
-
-					<script>
-						var totalSeconds = 0;
-						var timerElement = document.getElementById("timer");
-
-						function updateTimer() {
-						// Menghitung jumlah jam, menit, dan detik
-						var hours = Math.floor(totalSeconds / 3600);
-						var minutes = Math.floor((totalSeconds % 3600) / 60);
-						var seconds = totalSeconds % 60;
-
-						// Format waktu menjadi "MM:SS"
-						var formattedTime = padNumber(minutes) + ":" + padNumber(seconds);
-
-						// Memperbarui elemen dengan ID 'timer'
-						timerElement.textContent = formattedTime;
-
-						// Menambahkan 1 detik ke totalSeconds
-						totalSeconds++;
-						}
-
-						// Memanggil updateTimer setiap detik (1000ms)
-						setInterval(updateTimer, 1000);
-
-						// Fungsi untuk memformat angka menjadi dua digit dengan menambahkan leading zero
-						function padNumber(number) {
-						return number.toString().padStart(2, "0");
-						}
-					</script>
+					<h1 id="timer">00:00</h1>					
 				</tr>
 				<tr>
 					<th>Tim 1</th>
@@ -90,7 +61,44 @@
 			</tbody>
 		</table>
 		<br>
-		<a href="/umpire/pertandingan/final" class="btn btn-custom btn-primary">NEXT</a>
+		<form method="POST">
+			{% csrf_token %}
+			<div>
+				<input type="hidden" value="" id="durasi" name="durasi">
+				<input type="hidden" value="" id="hasil_match" name="hasil_match">
+			</div>
+			<button type="submit" class="btn btn-custom btn-primary">NEXT</a>
+		</form>
+		<script>
+			var totalSeconds = 0;
+			var timerElement = document.getElementById("timer");
+
+			function updateTimer() {
+			// Menghitung jumlah jam, menit, dan detik
+			var hours = Math.floor(totalSeconds / 3600);
+			var minutes = Math.floor((totalSeconds % 3600) / 60);
+			var seconds = totalSeconds % 60;
+
+			// Format waktu menjadi "MM:SS"
+			var formattedTime = padNumber(minutes) + ":" + padNumber(seconds);
+
+			// Memperbarui elemen dengan ID 'timer'
+			timerElement.textContent = formattedTime;
+			document.getElementById("durasi").value = formattedTime;
+
+
+			// Menambahkan 1 detik ke totalSeconds
+			totalSeconds++;
+			}
+
+			// Memanggil updateTimer setiap detik (1000ms)
+			setInterval(updateTimer, 1000);
+
+			// Fungsi untuk memformat angka menjadi dua digit dengan menambahkan leading zero
+			function padNumber(number) {
+			return number.toString().padStart(2, "0");
+			}
+		</script>
 	</div>
 </div>
 

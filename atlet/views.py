@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.shortcuts import redirect
+from utils.auth_util_validation import throw_to_home_if_unauthorized
 from utils.query import *
 from authentication.views import is_authenticated
 
@@ -506,7 +507,40 @@ def daftar_sponsor(request):
     return render(request, 'daftar_sponsor.html')
 
 def dashboard(request):
-    return render(request, 'dashboard.html')
+    if throw_to_home_if_unauthorized(request, "atlet"):
+        return redirect("/")
+    id_atlet = request.session.get("id")
+    query_dashboard = f'''
+    SELECT 
+        m.nama, a.negara_asal, m.email, a.tgl_lahir, A.play_right, A.height, STRING_AGG(DISTINCT MP.nama, ', '), 
+        CASE
+            WHEN ANK.id_atlet IS NOT NULL THEN 'Non Kualifikasi'
+            WHEN AK.id_atlet IS NOT NULL THEN 'Kualifikasi'
+            ELSE ''
+        END AS status, 
+        CASE
+            WHEN ANK.id_atlet IS NOT NULL THEN '-'
+            WHEN AK.id_atlet IS NOT NULL THEN cast(AK.world_rank as varchar)
+            ELSE ''
+        END AS world_rank_show,
+        COALESCE(SUM(PH.total_point),0) AS total_point_all_time
+    FROM 
+        atlet A 
+        INNER JOIN member M ON (A.id = m.id)
+        LEFT OUTER JOIN atlet_pelatih AP ON (AP.id_atlet = A.id)
+        INNER JOIN pelatih P ON (AP.id_pelatih = P.id)
+        INNER JOIN member MP ON (P.id = MP.id)
+        LEFT OUTER JOIN atlet_non_kualifikasi ANK ON (A.id = ANK.id_atlet)
+        LEFT OUTER JOIN atlet_kualifikasi AK ON (A.id = AK.id_atlet)
+        LEFT OUTER JOIN point_history PH ON (PH.id_atlet = A.id)
+    WHERE 
+        A.id = '{id_atlet}'
+    GROUP BY 
+        m.nama, a.negara_asal, m.email, a.tgl_lahir, A.play_right, A.height, status, world_rank_show
+    '''
+    data_atlet = list_tup_to_list_list(execute_query(query_dashboard))[0]
+    data_atlet[4] = 'Kanan' if data_atlet[4] else 'Kiri'
+    return render(request, 'dashboard.html', context={'data_atlet':data_atlet})
 
 def daftar_ujian(request):
     list_ujian = execute_query(

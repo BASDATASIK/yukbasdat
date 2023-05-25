@@ -2,7 +2,6 @@
 {% load static %}
 {% block meta %}
 <title>Dashboard Atlet - BABADU</title>
-<link rel="stylesheet" href="{% static 'auth/css/auth.css' %}">
 {% endblock meta %}
 
 {% block content %}
@@ -21,28 +20,58 @@
 					<h3><strong>Dashboard</strong></h3>
 				</div>
 				<div class="row mt-2">
-					<div class="col-md-12"><label class="labels">Nama Lengkap</label><input type="text" aria-labelledby="namalengkap" class="form-control" placeholder="" value="" id="namalengkap" disabled="true"></div>
+					<div class="col-md-12">
+						<label class="labels">Nama Lengkap</label>
+						<textarea aria-labelledby="namalengkap" class="form-control" placeholder="" rows="1" id="namalengkap" readonly>{{ data_atlet.0 }}</textarea>
+					</div>
 				</div>
 				<div class="row mt-2">
-					<div class="col-md-12"><label class="labels">Negara</label><input type="text" aria-labelledby="negara" class="form-control" placeholder="" value="" id="negara-edit" disabled="true"></div>
+					<div class="col-md-12">
+						<label class="labels">Negara</label>
+						<textarea aria-labelledby="negara" class="form-control" placeholder="" rows="1" id="negara-edit" readonly>{{ data_atlet.1 }}</textarea>
+					</div>
 				</div>
 				<div class="row mt-2">
-					<div class="col-md-12"><label class="labels">Email</label><input type="text" aria-labelledby="email" class="form-control" placeholder="" value="" id="email-edit" disabled="true"></div>
+					<div class="col-md-12">
+						<label class="labels">Email</label>
+						<textarea aria-labelledby="email" class="form-control" placeholder="" rows="1" id="email-edit" readonly>{{ data_atlet.2 }}</textarea>
+					</div>
 				</div>
 				<div class="row mt-2">
-					<div class="col-md-12"><label class="labels">Tanggal Lahir</label><input type="text" aria-labelledby="tanggal-lahir" class="form-control" placeholder="" value="" id="tanggal-lahir-edit" disabled="true"></div>
+					<div class="col-md-12">
+						<label class="labels">Tanggal Lahir</label>
+						<textarea aria-labelledby="tanggal-lahir" class="form-control" placeholder="" rows="1" id="tanggal-lahir-edit" readonly>{{ data_atlet.3 }}</textarea>
+					</div>
 				</div>
 				<div class="row mt-2">
-					<div class="col-md-6"><label class="labels">Play</label><input type="text" aria-labelledby="play" class="form-control" placeholder="" value="" id="play" disabled="true"></div>
-					<div class="col-md-6"><label class="labels">Tinggi Badan</label><input type="text" aria-labelledby="tinggi" class="form-control" value="" placeholder="" id="tinggi" disabled="true"></div>
+					<div class="col-md-6">
+						<label class="labels">Play</label>
+						<textarea aria-labelledby="play" class="form-control" placeholder="" rows="1" id="play" readonly>{{ data_atlet.4 }}</textarea>
+					</div>
+					<div class="col-md-6">
+						<label class="labels">Tinggi Badan</label>
+						<textarea aria-labelledby="tinggi" class="form-control" rows="1" id="tinggi" readonly>{{ data_atlet.5 }}</textarea>
+					</div>
 				</div>
 				<div class="row mt-2">
-					<div class="col-md-6"><label class="labels">Pelatih</label><input type="text" aria-labelledby="pelatih" class="form-control" placeholder="" value="" id="pelatih" disabled="true"></div>
-					<div class="col-md-6"><label class="labels">Status</label><input type="text" aria-labelledby="status" class="form-control" value="" placeholder="" id="status" disabled="true"></div>
+					<div class="col-md-6">
+						<label class="labels">Pelatih</label>
+						<textarea aria-labelledby="pelatih" class="form-control" placeholder="" rows="4" id="pelatih" readonly>{{ data_atlet.6 }}</textarea>
+					</div>
+					<div class="col-md-6">
+						<label class="labels">Status</label>
+						<textarea aria-labelledby="status" class="form-control" rows="1" id="status" readonly>{{ data_atlet.7 }}</textarea>
+					</div>
 				</div>
 				<div class="row mt-2">
-					<div class="col-md-6"><label class="labels">World Rank</label><input type="text" aria-labelledby="world-rank" class="form-control" placeholder="" value="" id="world-rank" disabled="true"></div>
-					<div class="col-md-6"><label class="labels">Total Poin</label><input type="text" aria-labelledby="total-poin" class="form-control" value="" placeholder="" id="total-poin" disabled="true"></div>
+					<div class="col-md-6">
+						<label class="labels">World Rank</label>
+						<textarea aria-labelledby="world-rank" class="form-control" placeholder="" rows="1" id="world-rank" readonly>{{ data_atlet.8 }}</textarea>
+					</div>
+					<div class="col-md-6">
+						<label class="labels">Total Poin</label>
+						<textarea aria-labelledby="total-poin" class="form-control" rows="1" id="total-poin" readonly>{{ data_atlet.9 }}</textarea>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -54,4 +83,107 @@
 </div>
 </div>
 </div>
+<!-- INTERNAL CSS FOR ATLET -->
+<style>
+html, body {
+    background-color: #f8f9fa;
+    height: auto;
+}
+
+body {
+    background-image: linear-gradient(to right, #10b4b1, #c6e8df);
+    font-family: 'Source Sans Pro', sans-serif;
+    min-height: 100vh;
+}
+
+.navbar-custom {
+    background-color: #002B5B;
+    box-shadow: 0 4px 8px rgba(7, 7, 7, 0.2);
+}
+
+.navbar-custom .navbar-brand,
+.navbar-custom .nav-link {
+    font-size: 1.25rem;
+}
+
+.navbar-custom .navbar-brand {
+    font-weight: bold;
+}
+
+.navbar-custom .nav-link {
+    transition: color 0.3s;
+}
+
+.navbar-custom .nav-link:hover {
+    color: #a2a378;
+}
+
+.btn-custom {
+    background-color: #368aab;
+    border-color: #28708f;
+}
+
+.btn-custom:hover,
+.btn-custom:focus,
+.btn-custom:active {
+    background-color: #225e83;
+    border-color: #164D68;
+}
+
+.content-container {
+    max-width: 5000px;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+    margin: 100px auto 50px;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.main-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.content-container {
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.table {
+    width: 100%;
+    background-color: white;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+thead {
+    background-color: #146288;
+    color: #fff;
+}
+
+.question .form-group {
+    background-color: #c5e5e4;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.question label {
+    font-size: 16px;
+    margin-left: 5px;
+}
+
+.row {
+    margin-left: 0;
+    margin-right: 0;
+}
+</style>
 {% endblock content %}
