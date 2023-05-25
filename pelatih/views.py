@@ -157,4 +157,21 @@ def list_latih_atlet(request):
 
 
 def dashboard(request):
-    return render(request, 'dashboard_pelatih.html')
+    if throw_to_home_if_unauthorized(request, "pelatih"):
+        return redirect("/")
+    id_pelatih = request.session.get("id")
+    query_dashboard = f'''
+    SELECT 
+        M.nama, '-' AS negara, M.email, STRING_AGG(S.spesialisasi, ', '), P.tanggal_mulai
+    FROM 
+        pelatih P 
+        INNER JOIN member M ON (P.id = M.id)
+        LEFT OUTER JOIN pelatih_spesialisasi PS ON (PS.id_pelatih = P.id)
+        LEFT OUTER JOIN spesialisasi S ON (PS.id_spesialisasi = S.id)
+    WHERE 
+        P.id = '{id_pelatih}'
+    GROUP BY 
+        M.nama, negara, M.email, P.tanggal_mulai;
+    '''
+    data_pelatih = list_tup_to_list_list(execute_query(query_dashboard))[0]
+    return render(request, 'dashboard_pelatih.html', context={'data_pelatih':data_pelatih})

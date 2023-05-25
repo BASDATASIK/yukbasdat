@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.shortcuts import redirect
+from utils.auth_util_validation import throw_to_home_if_unauthorized
 from utils.query import *
 from django.http import HttpResponseRedirect
 from django.urls import reverse
@@ -122,7 +123,20 @@ def data_perolehan_poin(request):
     return render(request, 'data_perolehan_poin.html')
 
 def dashboard(request):
-    return render(request, 'dashboard_umpire.html')
+    if throw_to_home_if_unauthorized(request, "umpire"):
+        return redirect("/")
+    id_umpire = request.session.get("id")
+    query_dashboard = f'''
+    SELECT 
+        M.nama, U.negara, M.email
+    FROM 
+        umpire U 
+        INNER JOIN member M ON (U.id = M.id)
+    WHERE 
+        M.id = '{id_umpire}';
+    '''
+    data_umpire = list_tup_to_list_list(execute_query(query_dashboard))[0]
+    return render(request, 'dashboard_umpire.html', context={'data_umpire':data_umpire})
 
 def create_ujian(request):
     if request.method == 'POST':
@@ -429,6 +443,11 @@ def hasil_pertandingan(request, jenis_partai:str, nama_event:str, tahun_event:in
             third = row if (not row[2]) else None
             fourth = row if ((third is not None) and (not row[2])) else None 
         ####### PEREMPAT #######
+        # list_perempat_d = seperatePerBabak('Perempatfinal', list_all_match_d)[:16]
+        # for row in list_perempat_d:
+        #     if (not (row[2]) and isNotEqual(row, isSingle=False)):
+        #         perempat_final.append(row)
+        #### ALTERNATIF ####
         list_16besar_d = seperatePerBabak('16 Besar', list_all_match_d)[:16]
         for row in list_16besar_d:
             if ((row[2]) and isNotEqual(row, isSingle=False)):
@@ -470,6 +489,7 @@ def hasil_pertandingan(request, jenis_partai:str, nama_event:str, tahun_event:in
         'fourth':fourth,
         'perempat_final':perempat_final,
         'card_partai_event':list_partai_kompetisi_event[0],
-        'len_perempat':len(perempat_final)
+        'len_perempat':len(perempat_final),
+        'len_perempat_plus_one':len(perempat_final)+1
     }
     return render(request, 'hasil_pertandingan_umpire.html', context)
