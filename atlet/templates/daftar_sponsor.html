@@ -14,29 +14,32 @@ input, select {
 
 <div class="content-container d-flex align-items-center justify-content-center mx-auto">
 	<div class="container">
-        <h2>DAFTAR SPONSOR</h2>
-        <form>
-            <div class="form-group">
-                <label for="nama-sponsor">Nama Sponsor:</label>
-                <select id="nama-sponsor" name="nama-sponsor">
-                <option value="">Pilih Sponsor</option>
-                <option value="Sponsor A">Sponsor A</option>
-                <option value="Sponsor B">Sponsor B</option>
-                <option value="Sponsor C">Sponsor C</option>
-                <option value="Sponsor D">Sponsor D</option>
-                </select>
-            </div>
+        <h2>Daftar Sponsor</h2>
+        {% if errorFlagBefore %}
+            {% if isEndswithSuccess %}
+                <div class="alert alert-success" role="alert" id="center">
+                    {{ errorMsgBefore }}
+                </div>
+            {% else %}
+                <div class="alert alert-danger" role="alert" id="center">
+                    {{ errorMsgBefore }}
+                </div>
+            {% endif %}
+        {% endif %}
+        <form method="POST">
+            <p> Nama Sponsor: 
+                {% csrf_token %}
+                {{ form.dropdown }} 
+            </p>
             <div class="form-group">
                 <label for="tanggal-mulai">Tanggal Mulai:</label>
-                <input type="date" id="tanggal-mulai" name="tanggal-mulai">
+                <input type="date" id="tanggal-mulai" name="tanggal-mulai" required>
             </div>
             <div class="form-group">
                 <label for="tanggal-selesai">Tanggal Selesai:</label>
-                <input type="date" id="tanggal-selesai" name="tanggal-selesai">
+                <input type="date" id="tanggal-selesai" name="tanggal-selesai" required>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Submit" class="btn btn-custom btn-primary">
-            </div>
+            <button type="submit">Submit</button>
         </form>
 	</div>
 </div>

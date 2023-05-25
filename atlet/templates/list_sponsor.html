@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block meta %}
+<title>List Sponsor Atlet - BABADU</title>
+<link rel="stylesheet" href="{% static 'auth/css/auth.css' %}">
+{% endblock meta %}
+
+{% block content %}
+<div class="content-container d-flex align-items-center justify-content-center mx-auto">
+	<div class="container">
+		<h2>List Sponsor</h2>
+		<table class="table table-bordered table-striped table-hover">
+			<thead class="text-center">
+			<tr>
+				<th>Nama Sponsor</th>
+				<th>Tanggal Mulai</th>
+				<th>Tanggal Selesai</th>
+			</tr>
+			</thead>
+			<tbody class="text-center">
+			{% for sponsor in list_sponsor %}
+
+			<tr>
+				<td>{{ sponsor.0 }}</td>
+				<td>{{ sponsor.1 }}</td>
+				<td>{{ sponsor.2 }}</td>
+			</tr>
+			{% endfor %}
+			</tbody>
+		</table>
+	</div>
+</div>
+{% endblock content %}  

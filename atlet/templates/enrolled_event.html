@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block meta %}
+<title>Enrolled Event - BABADU</title>
+<link rel="stylesheet" href="{% static 'auth/css/auth.css' %}">
+{% endblock meta %}
+
+{% block content %}
+<div class="content-container d-flex align-items-center justify-content-center mx-auto">
+	<div class="container">
+		<h2>Enrolled Event</h2>
+		<table class="table table-bordered table-striped table-hover">
+			<thead class="text-center">
+			<tr>
+				<th>Nama Event</th>
+				<th>Tahun</th>
+				<th>Stadium</th>
+                <th>Kategori Superseries</th>
+                <th>Tanggal Mulai</th>
+                <th>Tanggal Selesai</th>
+                <th></th>
+			</tr>
+			</thead>
+			<tbody class="text-center">
+			{% for event in enrolled_event %}
+
+			<tr>
+				<td>{{ event.0 }}</td>
+				<td>{{ event.1 }}</td>
+				<td>{{ event.2 }}</td>
+                <td>{{ event.3 }}</td>
+                <td>{{ event.4 }}</td>
+                <td>{{ event.5 }}</td>
+                <td>
+					<a href="" class="btn btn-custom btn-primary">Unenroll</a>
+				</td>
+			</tr>
+			{% endfor %}
+			</tbody>
+		</table>
+	</div>
+</div>
+{% endblock content %}
